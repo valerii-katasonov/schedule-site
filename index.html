@@ -282,12 +282,45 @@ const schedule = {
   ],
 };
 
+function getCurrentLesson(daySchedule) {
+  const now = new Date();
+  const currentHour = now.getHours();
+  const currentMinutes = now.getMinutes();
+  const currentTime = currentHour * 60 + currentMinutes;
+
+  for (let lesson of daySchedule) {
+    const [start, end] = lesson.time.split(" - ").map(time => {
+      const [hours, minutes] = time.split(":").map(Number);
+      return hours * 60 + minutes;
+    });
+
+    if (currentTime >= start && currentTime < end) {
+      if (lesson.subject === "Перерва" || lesson.subject.includes("Обід")) {
+        return { type: "break", lesson };
+      }
+      return { type: "lesson", lesson };
+    }
+  }
+
+  // Если текущее время после всех уроков
+  if (daySchedule.length > 0) {
+    const lastLessonEnd = daySchedule[daySchedule.length - 1].time.split(" - ")[1];
+    const [hours, minutes] = lastLessonEnd.split(":").map(Number);
+    const lastLessonEndTime = hours * 60 + minutes;
+
+    if (currentTime >= lastLessonEndTime) {
+      return { type: "finished" };
+    }
+  }
+
+  return null;
+}
+
 function renderSchedule() {
   const daysOfWeek = ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"];
   const today = new Date().getDay();
   const daySchedule = schedule[daysOfWeek[today]] || [];
 
-  // Розклад на сьогодні
   const dailyScheduleTable = document.querySelector("#daily-schedule tbody");
   dailyScheduleTable.innerHTML = '';
 
@@ -301,7 +334,23 @@ function renderSchedule() {
     dailyScheduleTable.innerHTML += row;
   });
 
-  // Розклад на тиждень
+  const currentLessonData = getCurrentLesson(daySchedule);
+  const currentLessonDiv = document.getElementById("current-lesson");
+
+  if (currentLessonData) {
+    if (currentLessonData.type === "lesson") {
+      const lesson = currentLessonData.lesson;
+      currentLessonDiv.textContent = `Зараз урок: ${lesson.subject} (${lesson.time})`;
+    } else if (currentLessonData.type === "break") {
+      const lesson = currentLessonData.lesson;
+      currentLessonDiv.textContent = `Зараз: ${lesson.subject} (${lesson.time})`;
+    } else if (currentLessonData.type === "finished") {
+      currentLessonDiv.textContent = "Заняття закінчилися.";
+    }
+  } else {
+    currentLessonDiv.textContent = "Зараз немає уроків.";
+  }
+
   const weeklyScheduleTable = document.querySelector("#weekly-schedule");
   weeklyScheduleTable.innerHTML = '';
 
@@ -321,7 +370,6 @@ function renderSchedule() {
       const isBreak = lesson.subject === "Перерва" || lesson.subject.includes("Обід");
       const rowClass = isBreak ? "highlight" : dayClass;
 
-      // Первая строка дня с объединенной ячейкой
       const row = `<tr class="${rowClass}">
         ${index === 0 ? `<td rowspan="${dayLessons.length}">${day}</td>` : ''}
         <td>${lesson.number}</td>
