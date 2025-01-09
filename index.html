@@ -87,11 +87,16 @@
       background-color: #fce4ec;
     }
     .google-image {
-      width: 1125px; /* Увеличено в 1.5 раза */
-      height: 1125px; /* Увеличено в 1.5 раза */
+      width: 150%; /* Увеличено в 1.5 раза */
+      height: 150%; /* Увеличено в 1.5 раза */
       object-fit: contain;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .image-container {
+      flex-shrink: 0;
+      width: 400px; /* Зафиксированная ширина для картинки */
+      height: auto;
     }
   </style>
 </head>
