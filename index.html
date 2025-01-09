@@ -209,7 +209,7 @@
         ? `Зараз урок: ${currentLesson.subject} (${currentLesson.time})`
         : "Зараз немає уроків.";
 
-      const weeklyScheduleTable = document.querySelector("#weekly-schedule");
+      const weeklyScheduleTable = document.querySelector("#weekly-schedule tbody");
       weeklyScheduleTable.innerHTML = '';
 
       Object.keys(schedule).forEach(day => {
