@@ -42,9 +42,6 @@
     th {
       background-color: #f2f2f2;
     }
-    .highlight {
-      background-color: #d4edda;
-    }
     /* Выделение цветов для разных дней недели */
     .monday {
       background-color: #e3f2fd; /* Голубой */
@@ -186,7 +183,7 @@
         const dayClass = day.toLowerCase(); // Получаем класс для дня (понеділок -> monday, вівторок -> tuesday и т.д.)
 
         dayLessons.forEach((lesson, index) => {
-          const rowClass = index === 0 ? `${dayClass}` : ''; // Выделяем только первый урок дня
+          const rowClass = dayClass; // Все уроки дня будут иметь свой цвет
           const row = `<tr class="${rowClass}">
             ${index === 0 ? `<td rowspan="${dayLessons.length}">${day}</td>` : ''}
             <td>${lesson.number}</td>
