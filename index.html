@@ -45,8 +45,21 @@
     .highlight {
       background-color: #d4edda;
     }
-    .day-row {
-      background-color: #e7f7e7; /* Цвет фона для каждого дня */
+    /* Выделение цветов для разных дней недели */
+    .monday {
+      background-color: #e3f2fd; /* Голубой */
+    }
+    .tuesday {
+      background-color: #fce4ec; /* Розовый */
+    }
+    .wednesday {
+      background-color: #f3e5f5; /* Лаванда */
+    }
+    .thursday {
+      background-color: #f1f8e9; /* Зеленый */
+    }
+    .friday {
+      background-color: #fffde7; /* Желтый */
     }
   </style>
 </head>
@@ -170,8 +183,10 @@
 
       for (const day in schedule) {
         const dayLessons = schedule[day];
+        const dayClass = day.toLowerCase(); // Получаем класс для дня (понеділок -> monday, вівторок -> tuesday и т.д.)
+
         dayLessons.forEach((lesson, index) => {
-          const rowClass = index === 0 ? 'day-row' : ''; // Выделяем только первый урок дня
+          const rowClass = index === 0 ? `${dayClass}` : ''; // Выделяем только первый урок дня
           const row = `<tr class="${rowClass}">
             ${index === 0 ? `<td rowspan="${dayLessons.length}">${day}</td>` : ''}
             <td>${lesson.number}</td>
