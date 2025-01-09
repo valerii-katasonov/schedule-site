@@ -209,22 +209,12 @@
         ? `Зараз урок: ${currentLesson.subject} (${currentLesson.time})`
         : "Зараз немає уроків.";
 
-      // Рендеринг расписания на всю неделю
-      const weeklyScheduleTable = document.querySelector("#weekly-schedule");
-      weeklyScheduleTable.innerHTML = ''; // Очистить таблицу перед рендером
-
-      // Выделяем цвета для разных дней недели
-      const dayClasses = {
-        "Понеділок": "monday",
-        "Вівторок": "tuesday",
-        "Середа": "wednesday", // Цвет для среды
-        "Четвер": "thursday", // Цвет для четверга
-        "П'ятниця": "friday", // Цвет для пятницы
-      };
+      const weeklyScheduleTable = document.getElementById("weekly-schedule");
+      weeklyScheduleTable.innerHTML = ''; // Очистка таблицы
 
       Object.keys(schedule).forEach(day => {
         schedule[day].forEach(lesson => {
-          const row = `<tr class="${dayClasses[day] || ''}">
+          const row = `<tr class="${day.toLowerCase()}">
             <td>${day}</td>
             <td>${lesson.number}</td>
             <td>${lesson.subject}</td>
