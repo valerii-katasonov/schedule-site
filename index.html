@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Розклад уроків | Push School Warsaw</title>
+  <title>Розклад уроків</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f3f6f9;
+      background-color: #f9f9f9;
     }
     header {
       background-color: #4CAF50;
@@ -26,12 +26,11 @@
       height: 40px;
     }
     .container {
-      max-width: 900px;
+      max-width: 800px;
       margin: 20px auto;
       padding: 20px;
       background: white;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
     .current-lesson {
       font-size: 1.5em;
@@ -52,27 +51,19 @@
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 20px;
-      border-radius: 8px;
-      overflow: hidden;
     }
     th, td {
       border: 1px solid #ddd;
-      padding: 12px;
+      padding: 8px;
       text-align: center;
-      font-size: 1em;
     }
     th {
       background-color: #f2f2f2;
     }
-    tr:nth-child(even) {
-      background-color: #fafafa;
-    }
-    tr:hover {
-      background-color: #f1f1f1;
-    }
     .highlight {
       background-color: #d4edda;
     }
+    /* Цвета для дней недели */
     .monday {
       background-color: #d1f7e7;
     }
@@ -88,16 +79,12 @@
     .friday {
       background-color: #fce4ec;
     }
-    .logo {
-      max-width: 50px;
-      height: auto;
-    }
   </style>
 </head>
 <body>
   <header>
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-HPZ0nuTMxkLBcmJNqSS5HzBb176UyZaD3w&s" alt="Push School Logo" class="logo">
-    <h1>Розклад уроків | Push School Warsaw</h1>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-HPZ0nuTMxkLBcmJNqSS5HzBb176UyZaD3w&s" alt="Push School Logo">
+    <h1>Розклад уроків</h1>
   </header>
   <div class="container">
     <div class="current-lesson" id="current-lesson">Зараз немає уроків.</div>
@@ -115,7 +102,7 @@
       </tbody>
     </table>
     <h2>Розклад на тиждень</h2>
-    <table id="weekly-schedule">
+    <table>
       <thead>
         <tr>
           <th>День</th>
@@ -124,7 +111,7 @@
           <th>Час</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="weekly-schedule">
         <!-- Данные добавляются JavaScript-ом -->
       </tbody>
     </table>
@@ -187,8 +174,9 @@
     }
 
     function renderSchedule() {
-      const today = new Date().toLocaleDateString("uk-UA", { weekday: "long" });
-      const daySchedule = schedule[today] || [];
+      const daysOfWeek = ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"];
+      const today = new Date().getDay(); // Получаем номер дня недели (0-6)
+      const daySchedule = schedule[daysOfWeek[today]] || [];
 
       const dailyScheduleTable = document.querySelector("#daily-schedule tbody");
       dailyScheduleTable.innerHTML = ''; // Очистить таблицу перед рендером
@@ -208,25 +196,37 @@
         ? `Зараз урок: ${currentLesson.subject} (${currentLesson.time})`
         : "Зараз немає уроків.";
 
-      const weeklyScheduleTable = document.querySelector("#weekly-schedule tbody");
+      // Рендеринг расписания на всю неделю
+      const weeklyScheduleTable = document.querySelector("#weekly-schedule");
       weeklyScheduleTable.innerHTML = ''; // Очистить таблицу перед рендером
 
-      Object.keys(schedule).forEach(day => {
-        let colorClass = day.toLowerCase(); // Класс для окраски
-        schedule[day].forEach((lesson, index) => {
-          const row = `
-            <tr class="${colorClass}">
-              ${index === 0 ? `<td rowspan="${schedule[day].length}">${day}</td>` : ""}
-              <td>${lesson.number}</td>
-              <td>${lesson.subject}</td>
-              <td>${lesson.time}</td>
-            </tr>`;
+      // Выделяем цвета для разных дней недели
+      const dayClasses = {
+        "Понеділок": "monday",
+        "Вівторок": "tuesday",
+        "Середа": "wednesday", // Цвет для среды
+        "Четвер": "thursday", // Цвет для четверга
+        "П'ятниця": "friday"
+      };
+
+      for (const day in schedule) {
+        const dayLessons = schedule[day];
+        const dayClass = dayClasses[day]; // Получаем класс для дня
+
+        dayLessons.forEach((lesson, index) => {
+          const rowClass = dayClass; // Применяем цвет для дня недели
+          const row = `<tr class="${rowClass}">
+            ${index === 0 ? `<td rowspan="${dayLessons.length}">${day}</td>` : ''}
+            <td>${lesson.number}</td>
+            <td>${lesson.subject}</td>
+            <td>${lesson.time}</td>
+          </tr>`;
           weeklyScheduleTable.innerHTML += row;
         });
-      });
+      }
     }
 
-    window.onload = renderSchedule;
+    renderSchedule();
   </script>
 </body>
 </html>
