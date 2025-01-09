@@ -10,6 +10,10 @@
       margin: 0;
       padding: 0;
       background-color: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
     }
     header {
       background-color: #4CAF50;
@@ -29,12 +33,13 @@
     }
     .container {
       max-width: 800px;
-      margin: 20px auto;
+      margin: 20px;
       padding: 20px;
       background: white;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       display: flex;
       gap: 20px;
+      flex-wrap: wrap;
     }
     .schedule-container {
       flex: 1;
@@ -92,8 +97,9 @@
       object-fit: cover;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      margin: 20px auto;
+      margin-left: 20px;
       display: block;
+      flex-shrink: 0;
     }
   </style>
 </head>
@@ -133,9 +139,8 @@
         </tbody>
       </table>
     </div>
+    <img class="google-image" src="https://i.postimg.cc/3wpTvvmt/2.png" alt="Google Drive Image">
   </div>
-
-  <img class="google-image" src="https://i.postimg.cc/3wpTvvmt/2.png" alt="Google Drive Image">
 
   <script>
     const schedule = {
