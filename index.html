@@ -23,24 +23,21 @@
       flex-wrap: wrap;
     }
     header img {
-      width: 90px;
-      height: 90px;
-      border-radius: 15px;
+      width: 90px;  /* Увеличено на 50% от предыдущего размера */
+      height: 90px; /* Увеличено на 50% от предыдущего размера */
+      border-radius: 15px; /* Закруглены углы */
     }
     .container {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      max-width: 1200px;
+      max-width: 800px;
       margin: 20px auto;
       padding: 20px;
-      gap: 50px;
-      flex-wrap: wrap; /* Добавляем для адаптивности */
+      background: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      gap: 20px;
     }
     .schedule-container {
       flex: 1;
-      text-align: center;
-      max-width: 800px;
     }
     .current-lesson {
       font-size: 1.5em;
@@ -73,6 +70,7 @@
     .highlight {
       background-color: #d4edda;
     }
+    /* Цвета для дней недели */
     .monday {
       background-color: #d1f7e7;
     }
@@ -89,84 +87,46 @@
       background-color: #fce4ec;
     }
     .google-image {
-      width: 100%;
-      height: auto;
-      object-fit: contain;
+      width: 500px;  /* Увеличиваем ширину изображения в 5 раз */
+      height: 500px; /* Увеличиваем высоту изображения в 5 раз */
+      object-fit: cover;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
-    .image-container {
-      flex-shrink: 0;
+    /* Расширение таблиц */
+    .tables-container table {
       width: 100%;
-      max-width: 400px;
-      padding: 20px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-      margin-left: 50px;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      padding-left: 50px;
+      padding-right: 50px;
     }
-    .image-container-left {
-      flex-shrink: 0;
-      width: 100%;
-      max-width: 400px;
-      padding: 20px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-      margin-right: 50px;
-    }
-    .schedule-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 50px;
-      flex-wrap: nowrap;
-      width: 100%;
-    }
+    /* Блоки с таблицами и картинками */
     .tables-container {
       display: flex;
       justify-content: center;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
+      gap: 20px;
+    }
+    .tables-container .schedule-container {
       width: 100%;
-      border: 2px solid #fff;
-      border-radius: 10px;
-      padding: 20px;
       background-color: white;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-      margin: 0 50px;
-      width: calc(100% + 5cm);
-      max-width: 1100px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
-
-    /* Медиа-запрос для адаптивности */
-    @media screen and (max-width: 900px) {
-      .container {
-        flex-direction: column;
-        gap: 30px;
-      }
-      .image-container, .image-container-left {
-        max-width: 90%;
-        margin-left: 0;
-        margin-right: 0;
-      }
-      .tables-container {
-        width: 100%;
-        margin: 0;
-      }
+    .image-container {
+      width: 500px;
+      height: 500px;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
-    /* Адаптивное расположение картинок на больших экранах */
-    @media screen and (min-width: 900px) {
-      .container {
-        flex-wrap: nowrap;
-      }
-      .image-container-left {
-        margin-right: 50px;
-      }
-      .image-container {
-        margin-left: 50px;
-      }
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
     }
   </style>
 </head>
@@ -175,11 +135,8 @@
     <img src="https://push-school.com/wp-content/themes/push/images/LOGO.png" alt="Push School Logo">
     <h1>Розклад уроків<br>1 клас<br>Push School Warsaw</h1>
   </header>
-  <div class="container">
-    <div class="image-container-left">
-      <img class="google-image" src="https://i.postimg.cc/3wpTvvmt/2.png" alt="Google Drive Image">
-    </div>
-    <div class="tables-container">
+  <div class="tables-container">
+    <div class="schedule-container">
       <div class="current-lesson" id="current-lesson">Зараз немає уроків.</div>
       <h2>Розклад на сьогодні</h2>
       <table id="daily-schedule">
@@ -273,11 +230,11 @@
 
     function renderSchedule() {
       const daysOfWeek = ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"];
-      const today = new Date().getDay();
+      const today = new Date().getDay(); // Получаем номер дня недели (0-6)
       const daySchedule = schedule[daysOfWeek[today]] || [];
 
       const dailyScheduleTable = document.querySelector("#daily-schedule tbody");
-      dailyScheduleTable.innerHTML = '';
+      dailyScheduleTable.innerHTML = ''; // Очистить таблицу перед рендером
 
       daySchedule.forEach(lesson => {
         const row = `<tr>
@@ -294,23 +251,25 @@
         ? `Зараз урок: ${currentLesson.subject} (${currentLesson.time})`
         : "Зараз немає уроків.";
 
+      // Рендеринг расписания на всю неделю
       const weeklyScheduleTable = document.querySelector("#weekly-schedule");
-      weeklyScheduleTable.innerHTML = '';
+      weeklyScheduleTable.innerHTML = ''; // Очистить таблицу перед рендером
 
+      // Выделяем цвета для разных дней недели
       const dayClasses = {
         "Понеділок": "monday",
         "Вівторок": "tuesday",
-        "Середа": "wednesday",
-        "Четвер": "thursday",
+        "Середа": "wednesday", // Цвет для среды
+        "Четвер": "thursday", // Цвет для четверга
         "П'ятниця": "friday"
       };
 
       for (const day in schedule) {
         const dayLessons = schedule[day];
-        const dayClass = dayClasses[day];
+        const dayClass = dayClasses[day]; // Получаем класс для дня
 
         dayLessons.forEach((lesson, index) => {
-          const rowClass = dayClass;
+          const rowClass = dayClass; // Применяем цвет для дня недели
           const row = `<tr class="${rowClass}">
             ${index === 0 ? `<td rowspan="${dayLessons.length}">${day}</td>` : ''}
             <td>${lesson.number}</td>
