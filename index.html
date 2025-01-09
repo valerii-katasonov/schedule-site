@@ -25,9 +25,19 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
     .current-lesson {
-      font-size: 1.2em;
+      font-size: 1.5em;
       color: #333;
+      background-color: #e0f7fa;
+      border-left: 6px solid #4caf50;
+      padding: 15px;
       margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+    .current-lesson:hover {
+      background-color: #b2ebf2;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
     table {
       width: 100%;
@@ -42,21 +52,8 @@
     th {
       background-color: #f2f2f2;
     }
-    /* Выделение цветов для разных дней недели */
-    .monday {
-      background-color: #e3f2fd; /* Голубой */
-    }
-    .tuesday {
-      background-color: #fce4ec; /* Розовый */
-    }
-    .wednesday {
-      background-color: #f3e5f5; /* Лаванда (Теперь четверг) */
-    }
-    .thursday {
-      background-color: #f1f8e9; /* Зеленый (Теперь среда) */
-    }
-    .friday {
-      background-color: #fffde7; /* Желтый */
+    .highlight {
+      background-color: #d4edda;
     }
   </style>
 </head>
