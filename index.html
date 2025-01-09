@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расписание уроков</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+        }
+        main {
+            margin: 20px;
+        }
+        .current-lesson {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .day-schedule, .week-schedule {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .highlight {
+            background-color: #ffeb3b;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Расписание уроков</h1>
+    </header>
+    <main>
+        <section class="current-lesson">
+            <h2>Текущий урок</h2>
+            <p id="current-lesson">Определяем текущий урок...</p>
+        </section>
+        <section class="day-schedule">
+            <h2>Расписание на сегодня</h2>
+            <table id="day-schedule">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Урок</th>
+                        <th>Время</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Данные будут добавлены с помощью JavaScript -->
+                </tbody>
+            </table>
+        </section>
+        <section class="week-schedule">
+            <h2>Расписание на неделю</h2>
+            <table id="week-schedule">
+                <thead>
+                    <tr>
+                        <th>День</th>
+                        <th>#</th>
+                        <th>Урок</th>
+                        <th>Время</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Данные будут добавлены с помощью JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <script>
+        // Данные расписания
+        const schedule = {
+            "Понеділок": [
+                { number: 1, name: "Навчання грамоти", time: "9:00 - 9:45" },
+                { number: 2, name: "Навчання грамоти", time: "9:55 - 10:40" },
+                { number: 3, name: "Математика", time: "10:50 - 11:35" },
+                { number: 4, name: "Англійська мова", time: "11:45 - 12:30" },
+                { number: 5, name: "Удари", time: "13:10 - 13:55" },
+                { number: 6, name: "Теорія музики", time: "14:05 - 14:50" },
+                { number: 7, name: "Театр ансамбль", time: "15:45 - 16:30" }
+            ],
+            // Добавьте остальные дни...
+        };
+
+        // Функция для получения текущего времени
+        function getCurrentTime() {
+            const now = new Date();
+            return now.getHours() + ":" + now.getMinutes();
+        }
+
+        // Определение текущего урока
+        function getCurrentLesson() {
+            const today = new Date().toLocaleDateString('uk-UA', { weekday: 'long' });
+            const lessons = schedule[today] || [];
+            const now = getCurrentTime();
+            let current = "Уроки на сегодня закончены.";
+
+            lessons.forEach(lesson => {
+                const [start, end] = lesson.time.split(" - ");
+                if (now >= start && now <= end) {
+                    current = `${lesson.name} (${lesson.time})`;
+                }
+            });
+
+            document.getElementById("current-lesson").textContent = current;
+        }
+
+        // Отображение расписания на день
+        function renderDaySchedule() {
+            const today = new Date().toLocaleDateString('uk-UA', { weekday: 'long' });
+            const lessons = schedule[today] || [];
+            const tbody = document.getElementById("day-schedule").querySelector("tbody");
+            tbody.innerHTML = "";
+
+            lessons.forEach(lesson => {
+                const row = document.createElement("tr");
+                row.innerHTML = `<td>${lesson.number}</td><td>${lesson.name}</td><td>${lesson.time}</td>`;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Отображение расписания на неделю
+        function renderWeekSchedule() {
+            const tbody = document.getElementById("week-schedule").querySelector("tbody");
+            tbody.innerHTML = "";
+
+            for (const [day, lessons] of Object.entries(schedule)) {
+                lessons.forEach(lesson => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `<td>${day}</td><td>${lesson.number}</td><td>${lesson.name}</td><td>${lesson.time}</td>`;
+                    tbody.appendChild(row);
+                });
+            }
+        }
+
+        // Инициализация
+        function init() {
+            getCurrentLesson();
+            renderDaySchedule();
+            renderWeekSchedule();
+        }
+
+        init();
+    </script>
+</body>
+</html>
