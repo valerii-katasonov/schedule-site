@@ -35,7 +35,7 @@
       margin: 20px auto;
       padding: 20px;
       gap: 50px;
-      flex-wrap: wrap;
+      flex-wrap: wrap; /* Добавляем для адаптивности */
     }
     .schedule-container {
       flex: 1;
@@ -327,11 +327,7 @@
             <td>${lesson.time}</td>
           </tr>`;
           weeklySchedule
-        });
-      }
     }
-
-    renderSchedule();
   </script>
 </body>
 </html>
