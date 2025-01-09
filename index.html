@@ -92,6 +92,11 @@
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
+    .table-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
@@ -102,33 +107,37 @@
   <div class="container">
     <div class="schedule-container">
       <div class="current-lesson" id="current-lesson">Зараз немає уроків.</div>
-      <h2>Розклад на сьогодні</h2>
-      <table id="daily-schedule">
-        <thead>
-          <tr>
-            <th>№</th>
-            <th>Урок</th>
-            <th>Час</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Данные добавляются JavaScript-ом -->
-        </tbody>
-      </table>
-      <h2>Розклад на тиждень</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>День</th>
-            <th>№</th>
-            <th>Урок</th>
-            <th>Час</th>
-          </tr>
-        </thead>
-        <tbody id="weekly-schedule">
-          <!-- Данные добавляются JavaScript-ом -->
-        </tbody>
-      </table>
+      <div class="table-container">
+        <h2>Розклад на сьогодні</h2>
+        <table id="daily-schedule">
+          <thead>
+            <tr>
+              <th>№</th>
+              <th>Урок</th>
+              <th>Час</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Данные добавляются JavaScript-ом -->
+          </tbody>
+        </table>
+      </div>
+      <div class="table-container">
+        <h2>Розклад на тиждень</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>День</th>
+              <th>№</th>
+              <th>Урок</th>
+              <th>Час</th>
+            </tr>
+          </thead>
+          <tbody id="weekly-schedule">
+            <!-- Данные добавляются JavaScript-ом -->
+          </tbody>
+        </table>
+      </div>
     </div>
     <div class="image-container">
       <img class="google-image" src="https://i.postimg.cc/3wpTvvmt/2.png" alt="Google Drive Image">
