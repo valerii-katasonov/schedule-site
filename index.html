@@ -35,6 +35,7 @@
       margin: 20px auto;
       padding: 20px;
       gap: 50px;
+      flex-wrap: wrap; /* Добавляем для адаптивности */
     }
     .schedule-container {
       flex: 1;
@@ -88,33 +89,31 @@
       background-color: #fce4ec;
     }
     .google-image {
-      width: 150%;
-      height: 150%;
+      width: 100%;
+      height: auto;
       object-fit: contain;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
     .image-container {
       flex-shrink: 0;
-      width: 400px;
-      height: auto;
-      margin-left: 50px;
-      min-height: 400px;
+      width: 100%;
+      max-width: 400px;
       padding: 20px;
       background-color: white;
       border-radius: 10px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      margin-left: 50px;
     }
     .image-container-left {
       flex-shrink: 0;
-      width: 400px;
-      height: auto;
-      margin-right: 50px;
-      min-height: 400px;
+      width: 100%;
+      max-width: 400px;
       padding: 20px;
       background-color: white;
       border-radius: 10px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      margin-right: 50px;
     }
     .schedule-wrapper {
       display: flex;
@@ -139,6 +138,23 @@
       margin: 0 50px;
       width: calc(100% + 5cm);
       max-width: 1100px;
+    }
+
+    /* Медиа-запрос для адаптивности */
+    @media screen and (max-width: 900px) {
+      .container {
+        flex-direction: column;
+        gap: 30px;
+      }
+      .image-container, .image-container-left {
+        max-width: 90%;
+        margin-left: 0;
+        margin-right: 0;
+      }
+      .tables-container {
+        width: 100%;
+        margin: 0;
+      }
     }
   </style>
 </head>
