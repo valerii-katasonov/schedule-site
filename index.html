@@ -3,26 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Розклад уроків</title>
+  <title>Розклад уроків | Push School Warsaw</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f9f9f9;
+      background-color: #f3f6f9;
     }
     header {
       background-color: #4CAF50;
       color: white;
       text-align: center;
       padding: 1em 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+    header img {
+      width: 40px;
+      height: 40px;
     }
     .container {
-      max-width: 800px;
+      max-width: 900px;
       margin: 20px auto;
       padding: 20px;
       background: white;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
     }
     .current-lesson {
       font-size: 1.5em;
@@ -43,19 +52,27 @@
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 20px;
+      border-radius: 8px;
+      overflow: hidden;
     }
     th, td {
       border: 1px solid #ddd;
-      padding: 8px;
+      padding: 12px;
       text-align: center;
+      font-size: 1em;
     }
     th {
       background-color: #f2f2f2;
     }
+    tr:nth-child(even) {
+      background-color: #fafafa;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
     .highlight {
       background-color: #d4edda;
     }
-    /* Цвета для дней недели */
     .monday {
       background-color: #d1f7e7;
     }
@@ -71,11 +88,16 @@
     .friday {
       background-color: #fce4ec;
     }
+    .logo {
+      max-width: 50px;
+      height: auto;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>Розклад уроків</h1>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-HPZ0nuTMxkLBcmJNqSS5HzBb176UyZaD3w&s" alt="Push School Logo" class="logo">
+    <h1>Розклад уроків | Push School Warsaw</h1>
   </header>
   <div class="container">
     <div class="current-lesson" id="current-lesson">Зараз немає уроків.</div>
@@ -197,27 +219,23 @@
         "Вівторок": "tuesday",
         "Середа": "wednesday", // Цвет для среды
         "Четвер": "thursday", // Цвет для четверга
-        "П'ятниця": "friday"
+        "П'ятниця": "friday", // Цвет для пятницы
       };
 
-      for (const day in schedule) {
-        const dayLessons = schedule[day];
-        const dayClass = dayClasses[day]; // Получаем класс для дня
-
-        dayLessons.forEach((lesson, index) => {
-          const rowClass = dayClass; // Применяем цвет для дня недели
-          const row = `<tr class="${rowClass}">
-            ${index === 0 ? `<td rowspan="${dayLessons.length}">${day}</td>` : ''}
+      Object.keys(schedule).forEach(day => {
+        schedule[day].forEach(lesson => {
+          const row = `<tr class="${dayClasses[day] || ''}">
+            <td>${day}</td>
             <td>${lesson.number}</td>
             <td>${lesson.subject}</td>
             <td>${lesson.time}</td>
           </tr>`;
           weeklyScheduleTable.innerHTML += row;
         });
-      }
+      });
     }
 
-    renderSchedule();
+    window.onload = renderSchedule;
   </script>
 </body>
 </html>
