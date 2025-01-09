@@ -287,6 +287,7 @@ function renderSchedule() {
   const today = new Date().getDay();
   const daySchedule = schedule[daysOfWeek[today]] || [];
 
+  // Розклад на сьогодні
   const dailyScheduleTable = document.querySelector("#daily-schedule tbody");
   dailyScheduleTable.innerHTML = '';
 
@@ -300,7 +301,8 @@ function renderSchedule() {
     dailyScheduleTable.innerHTML += row;
   });
 
-  const weeklyScheduleTable = document.querySelector("#weekly-schedule tbody");
+  // Розклад на тиждень
+  const weeklyScheduleTable = document.querySelector("#weekly-schedule");
   weeklyScheduleTable.innerHTML = '';
 
   const dayClasses = {
@@ -308,16 +310,18 @@ function renderSchedule() {
     "Вівторок": "tuesday",
     "Середа": "wednesday",
     "Четвер": "thursday",
-    "П'ятниця": "friday"
+    "П'ятниця": "friday",
   };
 
   for (const day in schedule) {
     const dayLessons = schedule[day];
-    const dayClass = dayClasses[day];
+    const dayClass = dayClasses[day] || "";
 
     dayLessons.forEach((lesson, index) => {
       const isBreak = lesson.subject === "Перерва" || lesson.subject.includes("Обід");
       const rowClass = isBreak ? "highlight" : dayClass;
+
+      // Первая строка дня с объединенной ячейкой
       const row = `<tr class="${rowClass}">
         ${index === 0 ? `<td rowspan="${dayLessons.length}">${day}</td>` : ''}
         <td>${lesson.number}</td>
