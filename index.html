@@ -209,8 +209,9 @@
         ? `Зараз урок: ${currentLesson.subject} (${currentLesson.time})`
         : "Зараз немає уроків.";
 
-      const weeklyScheduleTable = document.getElementById("weekly-schedule");
-      weeklyScheduleTable.innerHTML = ''; // Очистить таблицу перед рендером
+      // Очистить таблицу для недельного расписания
+      const weeklyScheduleTable = document.querySelector("#weekly-schedule");
+      weeklyScheduleTable.innerHTML = '';
 
       Object.keys(schedule).forEach(day => {
         let colorClass = day.toLowerCase(); // Клас для окраски
