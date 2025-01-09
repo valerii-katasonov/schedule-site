@@ -133,21 +133,22 @@
       width: 100%;
     }
     .tables-container {
+      width: calc(100% + 25px); /* Увеличено на 20px */
+      width: calc(100% + 50px); /* Увеличено на 20px */
+      max-width: 1120px; /* Увеличено на 20px от исходного */
       display: flex;
       justify-content: center;
       flex-direction: column;
       align-items: center;
       gap: 30px;
-      width: 100%;
       border: 2px solid #fff;
       border-radius: 10px;
       padding: 20px;
       background-color: white;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
       margin: 0 50px;
-      width: calc(100% + 5cm);
-      max-width: 1100px;
     }
+
 
     /* Медиа-запрос для адаптивности */
     @media screen and (max-width: 900px) {
@@ -294,18 +295,18 @@
       dailyScheduleTable.innerHTML = '';
 
       daySchedule.forEach(lesson => {
-        const row = <tr>
+        const row = `<tr>
           <td>${lesson.number}</td>
           <td>${lesson.subject}</td>
           <td>${lesson.time}</td>
-        </tr>;
+        </tr>`;
         dailyScheduleTable.innerHTML += row;
       });
 
       const currentLesson = getCurrentLesson(daySchedule);
       const currentLessonDiv = document.getElementById("current-lesson");
       currentLessonDiv.textContent = currentLesson
-        ? Зараз урок: ${currentLesson.subject} (${currentLesson.time})
+        ? `Зараз урок: ${currentLesson.subject} (${currentLesson.time})`
         : "Зараз немає уроків.";
 
       const weeklyScheduleTable = document.querySelector("#weekly-schedule");
@@ -325,12 +326,12 @@
 
         dayLessons.forEach((lesson, index) => {
           const rowClass = dayClass;
-          const row = <tr class="${rowClass}">
-            ${index === 0 ? <td rowspan="${dayLessons.length}">${day}</td> : ''}
+          const row = `<tr class="${rowClass}">
+            ${index === 0 ? `<td rowspan="${dayLessons.length}">${day}</td>` : ''}
             <td>${lesson.number}</td>
             <td>${lesson.subject}</td>
             <td>${lesson.time}</td>
-          </tr>;
+          </tr>`;
           weeklyScheduleTable.innerHTML += row;
         });
       }
