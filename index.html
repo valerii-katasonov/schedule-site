@@ -28,17 +28,15 @@
       border-radius: 15px; /* Закруглены углы */
     }
     .container {
-      max-width: 800px;
+      display: flex;
+      justify-content: space-between;
+      max-width: 1200px;
       margin: 20px auto;
       padding: 20px;
-      background: white;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      display: flex;
-      justify-content: space-between;  /* Равномерное распределение пространства */
-      gap: 20px;
     }
     .schedule-container {
       flex: 1;
+      margin-right: 20px;
     }
     .current-lesson {
       font-size: 1.5em;
@@ -132,7 +130,9 @@
         </tbody>
       </table>
     </div>
-    <img class="google-image" src="https://i.postimg.cc/3wpTvvmt/2.png" alt="Google Drive Image">
+    <div class="image-container">
+      <img class="google-image" src="https://i.postimg.cc/3wpTvvmt/2.png" alt="Google Drive Image">
+    </div>
   </div>
 
   <script>
@@ -235,7 +235,7 @@
         dayLessons.forEach((lesson, index) => {
           const rowClass = dayClass; // Применяем цвет для дня недели
           const row = `<tr class="${rowClass}">
-            ${index === 0 ? `<td rowspan="${dayLessons.length}">${day}</td>` : ''} 
+            ${index === 0 ? `<td rowspan="${dayLessons.length}">${day}</td>` : ''}
             <td>${lesson.number}</td>
             <td>${lesson.subject}</td>
             <td>${lesson.time}</td>
