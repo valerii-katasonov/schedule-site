@@ -23,13 +23,14 @@
       flex-wrap: wrap;
     }
     header img {
-      width: 90px;  /* Увеличено на 50% от предыдущего размера */
-      height: 90px; /* Увеличено на 50% от предыдущего размера */
-      border-radius: 15px; /* Закруглены углы */
+      width: 90px;
+      height: 90px;
+      border-radius: 15px;
     }
     .container {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
+      align-items: flex-start;
       max-width: 1200px;
       margin: 20px auto;
       padding: 20px;
@@ -37,6 +38,7 @@
     .schedule-container {
       flex: 1;
       margin-right: 20px;
+      text-align: center;
     }
     .current-lesson {
       font-size: 1.5em;
@@ -54,9 +56,11 @@
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
     table {
-      width: 100%;
+      width: 80%;
       border-collapse: collapse;
       margin-bottom: 20px;
+      margin-left: auto;
+      margin-right: auto;
     }
     th, td {
       border: 1px solid #ddd;
@@ -69,7 +73,6 @@
     .highlight {
       background-color: #d4edda;
     }
-    /* Цвета для дней недели */
     .monday {
       background-color: #d1f7e7;
     }
@@ -86,16 +89,11 @@
       background-color: #fce4ec;
     }
     .google-image {
-      width: 750px;  /* Увеличиваем ширину изображения в 1.5 раза */
-      height: 750px; /* Увеличиваем высоту изображения в 1.5 раза */
-      object-fit: contain;  /* Ожидается, что изображение будет подстраиваться без обрезки */
+      width: 750px;
+      height: 750px;
+      object-fit: contain;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-    .table-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
   </style>
 </head>
@@ -107,37 +105,33 @@
   <div class="container">
     <div class="schedule-container">
       <div class="current-lesson" id="current-lesson">Зараз немає уроків.</div>
-      <div class="table-container">
-        <h2>Розклад на сьогодні</h2>
-        <table id="daily-schedule">
-          <thead>
-            <tr>
-              <th>№</th>
-              <th>Урок</th>
-              <th>Час</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Данные добавляются JavaScript-ом -->
-          </tbody>
-        </table>
-      </div>
-      <div class="table-container">
-        <h2>Розклад на тиждень</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>День</th>
-              <th>№</th>
-              <th>Урок</th>
-              <th>Час</th>
-            </tr>
-          </thead>
-          <tbody id="weekly-schedule">
-            <!-- Данные добавляются JavaScript-ом -->
-          </tbody>
-        </table>
-      </div>
+      <h2>Розклад на сьогодні</h2>
+      <table id="daily-schedule">
+        <thead>
+          <tr>
+            <th>№</th>
+            <th>Урок</th>
+            <th>Час</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Данные добавляются JavaScript-ом -->
+        </tbody>
+      </table>
+      <h2>Розклад на тиждень</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>День</th>
+            <th>№</th>
+            <th>Урок</th>
+            <th>Час</th>
+          </tr>
+        </thead>
+        <tbody id="weekly-schedule">
+          <!-- Данные добавляются JavaScript-ом -->
+        </tbody>
+      </table>
     </div>
     <div class="image-container">
       <img class="google-image" src="https://i.postimg.cc/3wpTvvmt/2.png" alt="Google Drive Image">
@@ -203,11 +197,11 @@
 
     function renderSchedule() {
       const daysOfWeek = ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"];
-      const today = new Date().getDay(); // Получаем номер дня недели (0-6)
+      const today = new Date().getDay();
       const daySchedule = schedule[daysOfWeek[today]] || [];
 
       const dailyScheduleTable = document.querySelector("#daily-schedule tbody");
-      dailyScheduleTable.innerHTML = ''; // Очистить таблицу перед рендером
+      dailyScheduleTable.innerHTML = '';
 
       daySchedule.forEach(lesson => {
         const row = `<tr>
@@ -224,25 +218,23 @@
         ? `Зараз урок: ${currentLesson.subject} (${currentLesson.time})`
         : "Зараз немає уроків.";
 
-      // Рендеринг расписания на всю неделю
       const weeklyScheduleTable = document.querySelector("#weekly-schedule");
-      weeklyScheduleTable.innerHTML = ''; // Очистить таблицу перед рендером
+      weeklyScheduleTable.innerHTML = '';
 
-      // Выделяем цвета для разных дней недели
       const dayClasses = {
         "Понеділок": "monday",
         "Вівторок": "tuesday",
-        "Середа": "wednesday", // Цвет для среды
-        "Четвер": "thursday", // Цвет для четверга
+        "Середа": "wednesday",
+        "Четвер": "thursday",
         "П'ятниця": "friday"
       };
 
       for (const day in schedule) {
         const dayLessons = schedule[day];
-        const dayClass = dayClasses[day]; // Получаем класс для дня
+        const dayClass = dayClasses[day];
 
         dayLessons.forEach((lesson, index) => {
-          const rowClass = dayClass; // Применяем цвет для дня недели
+          const rowClass = dayClass;
           const row = `<tr class="${rowClass}">
             ${index === 0 ? `<td rowspan="${dayLessons.length}">${day}</td>` : ''}
             <td>${lesson.number}</td>
