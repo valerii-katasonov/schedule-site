@@ -156,6 +156,18 @@
         margin: 0;
       }
     }
+    /* Адаптивное расположение картинок на больших экранах */
+    @media screen and (min-width: 900px) {
+      .container {
+        flex-wrap: nowrap;
+      }
+      .image-container-left {
+        margin-right: 50px;
+      }
+      .image-container {
+        margin-left: 50px;
+      }
+    }
   </style>
 </head>
 <body>
