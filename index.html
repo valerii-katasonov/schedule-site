@@ -45,6 +45,9 @@
     .highlight {
       background-color: #d4edda;
     }
+    .day-row {
+      background-color: #e7f7e7; /* Цвет фона для каждого дня */
+    }
   </style>
 </head>
 <body>
@@ -166,9 +169,11 @@
       weeklyScheduleTable.innerHTML = ''; // Очистить таблицу перед рендером
 
       for (const day in schedule) {
-        schedule[day].forEach(lesson => {
-          const row = `<tr>
-            <td>${day}</td>
+        const dayLessons = schedule[day];
+        dayLessons.forEach((lesson, index) => {
+          const rowClass = index === 0 ? 'day-row' : ''; // Выделяем только первый урок дня
+          const row = `<tr class="${rowClass}">
+            ${index === 0 ? `<td rowspan="${dayLessons.length}">${day}</td>` : ''}
             <td>${lesson.number}</td>
             <td>${lesson.subject}</td>
             <td>${lesson.time}</td>
