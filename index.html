@@ -35,7 +35,7 @@
       margin: 20px auto;
       padding: 20px;
       gap: 50px;
-      flex-wrap: wrap; /* Добавляем для адаптивности */
+      flex-wrap: wrap;
     }
     .schedule-container {
       flex: 1;
@@ -141,7 +141,7 @@
       width: 100%;
       border: 2px solid #fff;
       border-radius: 10px;
-      padding: 20px;
+      padding: 40px 20px; /* Увеличено на 20px */
       background-color: white;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
       margin: 0 50px;
@@ -176,11 +176,6 @@
       .image-container-right {
         margin-left: 50px;
       }
-    }
-
-    /* Увеличение ширины таблиц */
-    table {
-      width: calc(100% + 50px);
     }
   </style>
 </head>
@@ -331,7 +326,7 @@
             <td>${lesson.subject}</td>
             <td>${lesson.time}</td>
           </tr>`;
-          weeklyScheduleTable.innerHTML += row;
+          weeklySchedule
         });
       }
     }
