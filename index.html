@@ -34,12 +34,13 @@
       max-width: 1200px;
       margin: 20px auto;
       padding: 20px;
-      gap: 40px; /* Увеличиваем зазор между таблицами и картинками */
+      gap: 40px;
     }
     .schedule-container {
       flex: 1;
       text-align: center;
-      margin: 0 auto; /* Центрируем блок с таблицами */
+      margin: 0 auto;
+      max-width: 800px; /* Ограничиваем ширину таблиц */
     }
     .current-lesson {
       font-size: 1.5em;
@@ -88,23 +89,25 @@
       background-color: #fce4ec;
     }
     .google-image {
-      width: 150%; /* Увеличено в 1.5 раза */
-      height: 150%; /* Увеличено в 1.5 раза */
+      width: 150%;
+      height: 150%;
       object-fit: contain;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
     .image-container {
       flex-shrink: 0;
-      width: 400px; /* Зафиксированная ширина для картинки */
+      width: 400px;
       height: auto;
-      margin-left: 50px; /* Сдвигаем картинку правее */
+      margin-left: 50px;
+      min-height: 400px; /* Зафиксированная минимальная высота для картинки */
     }
     .image-container-left {
       flex-shrink: 0;
-      width: 400px; /* Зафиксированная ширина для картинки */
+      width: 400px;
       height: auto;
-      margin-right: 50px; /* Сдвигаем картинку левее */
+      margin-right: 50px;
+      min-height: 400px; /* Зафиксированная минимальная высота для картинки */
     }
   </style>
 </head>
