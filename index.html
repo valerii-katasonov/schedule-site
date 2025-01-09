@@ -109,6 +109,14 @@
       margin-right: 50px;
       min-height: 400px; /* Зафиксированная минимальная высота для картинки */
     }
+    .schedule-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 50px;
+      flex-wrap: nowrap;
+      width: 100%;
+    }
   </style>
 </head>
 <body>
@@ -117,41 +125,43 @@
     <h1>Розклад уроків<br>1 клас<br>Push School Warsaw</h1>
   </header>
   <div class="container">
-    <div class="image-container-left">
-      <img class="google-image" src="https://i.postimg.cc/3wpTvvmt/2.png" alt="Google Drive Image">
-    </div>
-    <div class="schedule-container">
-      <div class="current-lesson" id="current-lesson">Зараз немає уроків.</div>
-      <h2>Розклад на сьогодні</h2>
-      <table id="daily-schedule">
-        <thead>
-          <tr>
-            <th>№</th>
-            <th>Урок</th>
-            <th>Час</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Данные добавляются JavaScript-ом -->
-        </tbody>
-      </table>
-      <h2>Розклад на тиждень</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>День</th>
-            <th>№</th>
-            <th>Урок</th>
-            <th>Час</th>
-          </tr>
-        </thead>
-        <tbody id="weekly-schedule">
-          <!-- Данные добавляются JavaScript-ом -->
-        </tbody>
-      </table>
-    </div>
-    <div class="image-container">
-      <img class="google-image" src="https://i.postimg.cc/3wpTvvmt/2.png" alt="Google Drive Image">
+    <div class="schedule-wrapper">
+      <div class="image-container-left">
+        <img class="google-image" src="https://i.postimg.cc/3wpTvvmt/2.png" alt="Google Drive Image">
+      </div>
+      <div class="schedule-container">
+        <div class="current-lesson" id="current-lesson">Зараз немає уроків.</div>
+        <h2>Розклад на сьогодні</h2>
+        <table id="daily-schedule">
+          <thead>
+            <tr>
+              <th>№</th>
+              <th>Урок</th>
+              <th>Час</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Данные добавляются JavaScript-ом -->
+          </tbody>
+        </table>
+        <h2>Розклад на тиждень</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>День</th>
+              <th>№</th>
+              <th>Урок</th>
+              <th>Час</th>
+            </tr>
+          </thead>
+          <tbody id="weekly-schedule">
+            <!-- Данные добавляются JavaScript-ом -->
+          </tbody>
+        </table>
+      </div>
+      <div class="image-container">
+        <img class="google-image" src="https://i.postimg.cc/3wpTvvmt/2.png" alt="Google Drive Image">
+      </div>
     </div>
   </div>
 
