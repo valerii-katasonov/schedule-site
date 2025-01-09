@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Schedule</title>
+  <title>Розклад уроків</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -11,154 +11,191 @@
       padding: 0;
       background-color: #f9f9f9;
     }
-
-    .tables-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-      gap: 20px; /* Увеличиваем расстояние между таблицами */
-    }
-
-    table {
-      width: 100%; /* Таблица занимает всю ширину контейнера */
-      max-width: 1000px; /* Ограничиваем ширину */
-      border-collapse: collapse;
-      background-color: #fff;
-      border: 1px solid #ddd;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    th, td {
-      text-align: center;
-      padding: 12px; /* Добавляем отступы */
-      border: 1px solid #ddd;
-    }
-
-    th {
-      background-color: #007BFF;
+    header {
+      background-color: #4CAF50;
       color: white;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-
-    .header {
+      text-align: center;
+      padding: 1em 0;
       display: flex;
       justify-content: center;
       align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    header img {
+      width: 90px;
+      height: 90px;
+      border-radius: 15px;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      max-width: 1200px;
+      margin: 20px auto;
       padding: 20px;
-      background-color: #007BFF;
-      color: white;
-      font-size: 24px;
+      gap: 50px;
+      flex-wrap: wrap;
+    }
+    .schedule-container {
+      flex: 1;
+      text-align: center;
+      max-width: 800px;
+    }
+    .current-lesson {
+      font-size: 1.5em;
+      color: #333;
+      background-color: #e0f7fa;
+      border-left: 6px solid #4caf50;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+    .current-lesson:hover {
+      background-color: #b2ebf2;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    table {
+      width: calc(100% + 50px); /* Увеличенная ширина таблиц */
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .highlight {
+      background-color: #d4edda;
+    }
+    .monday {
+      background-color: #d1f7e7;
+    }
+    .tuesday {
+      background-color: #e0f7fa;
+    }
+    .wednesday {
+      background-color: #ffecb3;
+    }
+    .thursday {
+      background-color: #fff3e0;
+    }
+    .friday {
+      background-color: #fce4ec;
+    }
+    .google-image {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .image-container {
+      flex-shrink: 0;
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+    .tables-container {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      width: 100%;
+      border: 2px solid #fff;
+      border-radius: 10px;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      margin: 0 50px;
+    }
+    @media screen and (max-width: 900px) {
+      .container {
+        flex-direction: column;
+        gap: 30px;
+      }
+      .image-container {
+        max-width: 90%;
+        margin: 0;
+      }
+      .tables-container {
+        width: 100%;
+        margin: 0;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="header">Schedule for the Week</div>
-  <div class="tables-container">
-    <!-- Example Table 1 -->
-    <table>
-      <thead>
-        <tr>
-          <th>№</th>
-          <th>Урок</th>
-          <th>Час</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Навчання грамоти</td>
-          <td>9:00 - 9:45</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Навчання грамоти</td>
-          <td>9:55 - 10:40</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Język Polski</td>
-          <td>10:50 - 11:35</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Математика</td>
-          <td>11:55 - 12:40</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>Plastyka</td>
-          <td>13:00 - 13:45</td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td>Англійська мова</td>
-          <td>13:55 - 14:40</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- Example Table 2 -->
-    <table>
-      <thead>
-        <tr>
-          <th>День</th>
-          <th>№</th>
-          <th>Урок</th>
-          <th>Час</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td rowspan="4">Понеділок</td>
-          <td>1</td>
-          <td>Навчання грамоти</td>
-          <td>9:00 - 9:45</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Навчання грамоти</td>
-          <td>9:55 - 10:40</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Математика</td>
-          <td>10:50 - 11:35</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Англійська мова</td>
-          <td>11:55 - 12:40</td>
-        </tr>
-        <tr>
-          <td rowspan="4">Вівторок</td>
-          <td>1</td>
-          <td>Навчання грамоти</td>
-          <td>9:00 - 9:45</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Навчання грамоти</td>
-          <td>9:55 - 10:40</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Математика</td>
-          <td>10:50 - 11:35</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Przyroda</td>
-          <td>11:55 - 12:40</td>
-        </tr>
-      </tbody>
-    </table>
+  <header>
+    <img src="https://push-school.com/wp-content/themes/push/images/LOGO.png" alt="Push School Logo">
+    <h1>Розклад уроків<br>1 клас<br>Push School Warsaw</h1>
+  </header>
+  <div class="container">
+    <div class="tables-container">
+      <div class="current-lesson" id="current-lesson">Зараз немає уроків.</div>
+      <h2>Розклад на сьогодні</h2>
+      <table id="daily-schedule">
+        <thead>
+          <tr>
+            <th>№</th>
+            <th>Урок</th>
+            <th>Час</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <h2>Розклад на тиждень</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>День</th>
+            <th>№</th>
+            <th>Урок</th>
+            <th>Час</th>
+          </tr>
+        </thead>
+        <tbody id="weekly-schedule">
+        </tbody>
+      </table>
+    </div>
   </div>
+  <script>
+    const schedule = {
+      "Понеділок": [
+        { number: 1, subject: "Навчання грамоти", time: "9:00 - 9:45" },
+        { number: 2, subject: "Навчання грамоти", time: "9:55 - 10:40" },
+        { number: 3, subject: "Математика", time: "10:50 - 11:35" },
+        { number: 4, subject: "Англійська мова", time: "11:55 - 12:40" },
+      ]
+    };
+
+    function renderSchedule() {
+      const dailySchedule = schedule["Понеділок"];
+      const dailyScheduleTable = document.querySelector("#daily-schedule tbody");
+
+      dailySchedule.forEach(lesson => {
+        const row = `
+          <tr>
+            <td>${lesson.number}</td>
+            <td>${lesson.subject}</td>
+            <td>${lesson.time}</td>
+          </tr>
+        `;
+        dailyScheduleTable.innerHTML += row;
+      });
+    }
+
+    renderSchedule();
+  </script>
 </body>
 </html>
