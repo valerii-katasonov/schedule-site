@@ -35,7 +35,7 @@
       margin: 20px auto;
       padding: 20px;
       gap: 50px;
-      flex-wrap: wrap;
+      flex-wrap: wrap; /* Добавляем для адаптивности */
     }
     .schedule-container {
       flex: 1;
@@ -145,7 +145,7 @@
       background-color: white;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
       margin: 0 50px;
-      width: calc(100% + 5cm); /* Расширяем ширину на 5 см */
+      width: calc(100% + 5cm);
       max-width: 1100px;
     }
 
@@ -176,6 +176,11 @@
       .image-container-right {
         margin-left: 50px;
       }
+    }
+
+    /* Увеличение ширины таблиц */
+    table {
+      width: calc(100% + 10px);
     }
   </style>
 </head>
@@ -302,6 +307,33 @@
       currentLessonDiv.textContent = currentLesson
         ? `Зараз урок: ${currentLesson.subject} (${currentLesson.time})`
         : "Зараз немає уроків.";
+
+      const weeklyScheduleTable = document.querySelector("#weekly-schedule");
+      weeklyScheduleTable.innerHTML = '';
+
+      const dayClasses = {
+        "Понеділок": "monday",
+        "Вівторок": "tuesday",
+        "Середа": "wednesday",
+        "Четвер": "thursday",
+        "П'ятниця": "friday"
+      };
+
+      for (const day in schedule) {
+        const dayLessons = schedule[day];
+        const dayClass = dayClasses[day];
+
+        dayLessons.forEach((lesson, index) => {
+          const rowClass = dayClass;
+          const row = `<tr class="${rowClass}">
+            ${index === 0 ? `<td rowspan="${dayLessons.length}">${day}</td>` : ''}
+            <td>${lesson.number}</td>
+            <td>${lesson.subject}</td>
+            <td>${lesson.time}</td>
+          </tr>`;
+          weeklyScheduleTable.innerHTML += row;
+        });
+      }
     }
 
     renderSchedule();
