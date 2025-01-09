@@ -35,36 +35,12 @@
       margin: 20px auto;
       padding: 20px;
       gap: 50px;
-      flex-wrap: wrap;
+      flex-wrap: wrap; /* Добавляем для адаптивности */
     }
-    .image-container-left,
-    .image-container-right {
-      flex-shrink: 0;
-      width: 100%;
-      max-width: 400px;
-      padding: 20px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    }
-    .image-container-left {
-      margin-right: 50px;
-    }
-    .image-container-right {
-      margin-left: 50px;
-    }
-    .tables-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      width: calc(100% + 20px); /* Увеличен размер блока на 20px */
-      max-width: 1120px; /* Максимальная ширина с учетом увеличения */
-      padding: 20px;
-      background-color: white;
-      border: 2px solid #fff;
-      border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    .schedule-container {
+      flex: 1;
+      text-align: center;
+      max-width: 800px;
     }
     .current-lesson {
       font-size: 1.5em;
@@ -119,20 +95,86 @@
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
+    .image-container {
+      flex-shrink: 0;
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+    .image-container-left {
+      flex-shrink: 0;
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      margin-right: 50px;
+    }
+    .image-container-right {
+      flex-shrink: 0;
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      margin-left: 50px;
+    }
+    .schedule-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 50px;
+      flex-wrap: nowrap;
+      width: 100%;
+    }
+    .tables-container {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      width: 100%;
+      border: 2px solid #fff;
+      border-radius: 10px;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      margin: 0 50px;
+      width: calc(100% + 5cm);
+      max-width: 1120px; /* Увеличено на 20px */
+    }
 
+    /* Медиа-запрос для адаптивности */
     @media screen and (max-width: 900px) {
       .container {
         flex-direction: column;
         gap: 30px;
       }
-      .image-container-left,
-      .image-container-right {
-        margin: 0;
+      .image-container, .image-container-left, .image-container-right {
         max-width: 90%;
+        margin-left: 0;
+        margin-right: 0;
       }
       .tables-container {
         width: 100%;
         margin: 0;
+      }
+    }
+    /* Адаптивное расположение картинок на больших экранах */
+    @media screen and (min-width: 900px) {
+      .container {
+        flex-wrap: nowrap;
+      }
+      .image-container-left {
+        margin-right: 50px;
+      }
+      .image-container-right {
+        margin-left: 50px;
       }
     }
   </style>
@@ -157,7 +199,9 @@
             <th>Час</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          <!-- Данные добавляются JavaScript-ом -->
+        </tbody>
       </table>
       <h2>Розклад на тиждень</h2>
       <table>
@@ -169,51 +213,14 @@
             <th>Час</th>
           </tr>
         </thead>
-        <tbody id="weekly-schedule"></tbody>
+        <tbody id="weekly-schedule">
+          <!-- Данные добавляются JavaScript-ом -->
+        </tbody>
       </table>
     </div>
     <div class="image-container-right">
       <img class="google-image" src="https://i.postimg.cc/3wpTvvmt/2.png" alt="Google Drive Image">
     </div>
   </div>
-
-  <script>
-    const schedule = {
-      "Понеділок": [
-        { number: 1, subject: "Навчання грамоти", time: "9:00 - 9:45" },
-        { number: 2, subject: "Навчання грамоти", time: "9:55 - 10:40" },
-        { number: 3, subject: "Математика", time: "10:50 - 11:35" },
-        { number: 4, subject: "Англійська мова", time: "11:55 - 12:40" },
-      ],
-      // Добавьте остальные дни...
-    };
-
-    function renderSchedule() {
-      const weeklyScheduleTable = document.querySelector("#weekly-schedule");
-      weeklyScheduleTable.innerHTML = '';
-      for (const day in schedule) {
-        schedule[day].forEach((lesson, index) => {
-          const row = document.createElement("tr");
-          if (index === 0) {
-            const dayCell = document.createElement("td");
-            dayCell.textContent = day;
-            dayCell.rowSpan = schedule[day].length;
-            row.appendChild(dayCell);
-          }
-          const numberCell = document.createElement("td");
-          numberCell.textContent = lesson.number;
-          row.appendChild(numberCell);
-          const subjectCell = document.createElement("td");
-          subjectCell.textContent = lesson.subject;
-          row.appendChild(subjectCell);
-          const timeCell = document.createElement("td");
-          timeCell.textContent = lesson.time;
-          row.appendChild(timeCell);
-          weeklyScheduleTable.appendChild(row);
-        });
-      }
-    }
-    renderSchedule();
-  </script>
 </body>
 </html>
