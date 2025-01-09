@@ -3,72 +3,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Расписание</title>
+  <title>Schedule</title>
   <style>
-    /* Общие стили */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
       background-color: #f9f9f9;
-      color: #333;
     }
 
     .tables-container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 20px auto;
-      padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 40px; /* Расстояние между элементами */
-    }
-
-    /* Стили для календаря */
-    .calendar img {
+      align-items: center;
       width: 100%;
-      max-width: 600px;
-      display: block;
+      max-width: 1200px;
       margin: 0 auto;
+      padding: 20px;
+      gap: 20px; /* Увеличиваем расстояние между таблицами */
     }
 
-    /* Стили для таблиц */
     table {
-      width: 100%;
+      width: 100%; /* Таблица занимает всю ширину контейнера */
+      max-width: 1000px; /* Ограничиваем ширину */
       border-collapse: collapse;
       background-color: #fff;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    thead {
-      background-color: #0078D7;
-      color: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
     th, td {
-      padding: 10px;
       text-align: center;
+      padding: 12px; /* Добавляем отступы */
       border: 1px solid #ddd;
     }
 
-    tbody tr:nth-child(even) {
+    th {
+      background-color: #007BFF;
+      color: white;
+    }
+
+    tr:nth-child(even) {
       background-color: #f2f2f2;
     }
 
-    h2 {
-      text-align: center;
-      color: #0078D7;
+    .header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background-color: #007BFF;
+      color: white;
+      font-size: 24px;
     }
   </style>
 </head>
 <body>
+  <div class="header">Schedule for the Week</div>
   <div class="tables-container">
-    <!-- Календарь -->
-    <div class="calendar">
-      <img src="calendar-image.png" alt="Календарь" />
-    </div>
-
-    <!-- Ежедневное расписание -->
+    <!-- Example Table 1 -->
     <table>
       <thead>
         <tr>
@@ -111,8 +104,7 @@
       </tbody>
     </table>
 
-    <!-- Расписание на неделю -->
-    <h2>Розклад на тиждень</h2>
+    <!-- Example Table 2 -->
     <table>
       <thead>
         <tr>
