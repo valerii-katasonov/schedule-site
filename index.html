@@ -115,7 +115,7 @@
       </tbody>
     </table>
     <h2>Розклад на тиждень</h2>
-    <table>
+    <table id="weekly-schedule">
       <thead>
         <tr>
           <th>День</th>
@@ -124,7 +124,7 @@
           <th>Час</th>
         </tr>
       </thead>
-      <tbody id="weekly-schedule">
+      <tbody>
         <!-- Данные добавляются JavaScript-ом -->
       </tbody>
     </table>
@@ -187,9 +187,8 @@
     }
 
     function renderSchedule() {
-      const daysOfWeek = ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"];
-      const today = new Date().getDay(); // Получаем номер дня недели (0-6)
-      const daySchedule = schedule[daysOfWeek[today]] || [];
+      const today = new Date().toLocaleDateString("uk-UA", { weekday: "long" });
+      const daySchedule = schedule[today] || [];
 
       const dailyScheduleTable = document.querySelector("#daily-schedule tbody");
       dailyScheduleTable.innerHTML = ''; // Очистить таблицу перед рендером
@@ -210,10 +209,10 @@
         : "Зараз немає уроків.";
 
       const weeklyScheduleTable = document.querySelector("#weekly-schedule tbody");
-      weeklyScheduleTable.innerHTML = '';
+      weeklyScheduleTable.innerHTML = ''; // Очистить таблицу перед рендером
 
       Object.keys(schedule).forEach(day => {
-        let colorClass = day.toLowerCase(); // Клас для окраски
+        let colorClass = day.toLowerCase(); // Класс для окраски
         schedule[day].forEach((lesson, index) => {
           const row = `
             <tr class="${colorClass}">
