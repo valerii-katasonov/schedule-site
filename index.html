@@ -210,16 +210,18 @@
         : "Зараз немає уроків.";
 
       const weeklyScheduleTable = document.getElementById("weekly-schedule");
-      weeklyScheduleTable.innerHTML = ''; // Очистка таблицы
+      weeklyScheduleTable.innerHTML = ''; // Очистить таблицу перед рендером
 
       Object.keys(schedule).forEach(day => {
-        schedule[day].forEach(lesson => {
-          const row = `<tr class="${day.toLowerCase()}">
-            <td>${day}</td>
-            <td>${lesson.number}</td>
-            <td>${lesson.subject}</td>
-            <td>${lesson.time}</td>
-          </tr>`;
+        let colorClass = day.toLowerCase(); // Клас для окраски
+        schedule[day].forEach((lesson, index) => {
+          const row = `
+            <tr class="${colorClass}">
+              ${index === 0 ? `<td rowspan="${schedule[day].length}">${day}</td>` : ""}
+              <td>${lesson.number}</td>
+              <td>${lesson.subject}</td>
+              <td>${lesson.time}</td>
+            </tr>`;
           weeklyScheduleTable.innerHTML += row;
         });
       });
