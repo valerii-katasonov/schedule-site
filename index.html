@@ -34,7 +34,7 @@
       max-width: 1200px;
       margin: 20px auto;
       padding: 20px;
-      gap: 40px; /* Увеличиваем зазор между таблицами и картинкой */
+      gap: 40px; /* Увеличиваем зазор между таблицами и картинками */
     }
     .schedule-container {
       flex: 1;
@@ -100,6 +100,12 @@
       height: auto;
       margin-left: 50px; /* Сдвигаем картинку правее */
     }
+    .image-container-left {
+      flex-shrink: 0;
+      width: 400px; /* Зафиксированная ширина для картинки */
+      height: auto;
+      margin-right: 50px; /* Сдвигаем картинку левее */
+    }
   </style>
 </head>
 <body>
@@ -108,6 +114,9 @@
     <h1>Розклад уроків<br>1 клас<br>Push School Warsaw</h1>
   </header>
   <div class="container">
+    <div class="image-container-left">
+      <img class="google-image" src="https://i.postimg.cc/3wpTvvmt/2.png" alt="Google Drive Image">
+    </div>
     <div class="schedule-container">
       <div class="current-lesson" id="current-lesson">Зараз немає уроків.</div>
       <h2>Розклад на сьогодні</h2>
