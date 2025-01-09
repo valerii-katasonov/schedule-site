@@ -35,7 +35,7 @@
       margin: 20px auto;
       padding: 20px;
       gap: 50px;
-      flex-wrap: wrap;
+      flex-wrap: wrap; /* Добавляем для адаптивности */
     }
     .schedule-container {
       flex: 1;
@@ -58,7 +58,7 @@
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
     table {
-      width: calc(100% + 50px); /* Увеличенная ширина таблиц */
+      width: 100%;
       border-collapse: collapse;
       margin-bottom: 20px;
     }
@@ -104,6 +104,34 @@
       border-radius: 10px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     }
+    .image-container-left {
+      flex-shrink: 0;
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      margin-right: 50px;
+    }
+    .image-container-right {
+      flex-shrink: 0;
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      margin-left: 50px;
+    }
+    .schedule-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 50px;
+      flex-wrap: nowrap;
+      width: 100%;
+    }
     .tables-container {
       display: flex;
       justify-content: center;
@@ -117,20 +145,42 @@
       background-color: white;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
       margin: 0 50px;
+      width: calc(100% + 5cm);
+      max-width: 1100px;
     }
+
+    /* Медиа-запрос для адаптивности */
     @media screen and (max-width: 900px) {
       .container {
         flex-direction: column;
         gap: 30px;
       }
-      .image-container {
+      .image-container, .image-container-left, .image-container-right {
         max-width: 90%;
-        margin: 0;
+        margin-left: 0;
+        margin-right: 0;
       }
       .tables-container {
         width: 100%;
         margin: 0;
       }
+    }
+    /* Адаптивное расположение картинок на больших экранах */
+    @media screen and (min-width: 900px) {
+      .container {
+        flex-wrap: nowrap;
+      }
+      .image-container-left {
+        margin-right: 50px;
+      }
+      .image-container-right {
+        margin-left: 50px;
+      }
+    }
+
+    /* Увеличение ширины таблиц */
+    table {
+      width: calc(100% + 50px);
     }
   </style>
 </head>
@@ -140,6 +190,9 @@
     <h1>Розклад уроків<br>1 клас<br>Push School Warsaw</h1>
   </header>
   <div class="container">
+    <div class="image-container-left">
+      <img class="google-image" src="https://i.postimg.cc/3wpTvvmt/2.png" alt="Google Drive Image">
+    </div>
     <div class="tables-container">
       <div class="current-lesson" id="current-lesson">Зараз немає уроків.</div>
       <h2>Розклад на сьогодні</h2>
@@ -152,6 +205,7 @@
           </tr>
         </thead>
         <tbody>
+          <!-- Данные добавляются JavaScript-ом -->
         </tbody>
       </table>
       <h2>Розклад на тиждень</h2>
@@ -165,10 +219,15 @@
           </tr>
         </thead>
         <tbody id="weekly-schedule">
+          <!-- Данные добавляются JavaScript-ом -->
         </tbody>
       </table>
     </div>
+    <div class="image-container-right">
+      <img class="google-image" src="https://i.postimg.cc/3wpTvvmt/2.png" alt="Google Drive Image">
+    </div>
   </div>
+
   <script>
     const schedule = {
       "Понеділок": [
@@ -176,23 +235,105 @@
         { number: 2, subject: "Навчання грамоти", time: "9:55 - 10:40" },
         { number: 3, subject: "Математика", time: "10:50 - 11:35" },
         { number: 4, subject: "Англійська мова", time: "11:55 - 12:40" },
-      ]
+      ],
+      "Вівторок": [
+        { number: 1, subject: "Навчання грамоти", time: "9:00 - 9:45" },
+        { number: 2, subject: "Навчання грамоти", time: "9:55 - 10:40" },
+        { number: 3, subject: "Математика", time: "10:50 - 11:35" },
+        { number: 4, subject: "Przyroda", time: "11:55 - 12:40" },
+        { number: 5, subject: "Plastyka", time: "13:00 - 13:45" },
+      ],
+      "Середа": [
+        { number: 1, subject: "Навчання грамоти", time: "9:00 - 9:45" },
+        { number: 2, subject: "Математика", time: "9:55 - 10:40" },
+        { number: 3, subject: "Jezyk Polski", time: "10:50 - 11:35" },
+        { number: 4, subject: "Англійська мова", time: "11:55 - 12:40" },
+        { number: 5, subject: "Англійська мова", time: "13:00 - 13:45" },
+      ],
+      "Четвер": [
+        { number: 1, subject: "Навчання грамоти", time: "9:00 - 9:45" },
+        { number: 2, subject: "Навчання грамоти", time: "9:55 - 10:40" },
+        { number: 3, subject: "Jezyk Polski", time: "10:50 - 11:35" },
+        { number: 4, subject: "Математика", time: "11:55 - 12:40" },
+        { number: 5, subject: "Plastyka", time: "13:00 - 13:45" },
+        { number: 6, subject: "Англійська мова", time: "13:55 - 14:40" },
+      ],
+      "П'ятниця": [
+        { number: 1, subject: "Я досліджую світ", time: "9:00 - 9:45" },
+        { number: 2, subject: "Jezyk Polski", time: "9:55 - 10:40" },
+        { number: 3, subject: "Edukacja wczesnoszkolna", time: "10:50 - 11:35" },
+        { number: 4, subject: "Wyhowanie фізичне (басейн)", time: "11:55 - 12:40" },
+        { number: 5, subject: "Wyhowanie фізичне (басейн)", time: "13:00 - 13:45" },
+      ],
     };
 
-    function renderSchedule() {
-      const dailySchedule = schedule["Понеділок"];
-      const dailyScheduleTable = document.querySelector("#daily-schedule tbody");
+    function getCurrentLesson(daySchedule) {
+      const now = new Date();
+      const currentHour = now.getHours();
+      const currentMinutes = now.getMinutes();
+      const currentTime = currentHour * 60 + currentMinutes;
 
-      dailySchedule.forEach(lesson => {
-        const row = `
-          <tr>
+      for (let lesson of daySchedule) {
+        const [start, end] = lesson.time.split(" - ").map(time => {
+          const [hours, minutes] = time.split(":").map(Number);
+          return hours * 60 + minutes;
+        });
+        if (currentTime >= start && currentTime < end) {
+          return lesson;
+        }
+      }
+      return null;
+    }
+
+    function renderSchedule() {
+      const daysOfWeek = ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"];
+      const today = new Date().getDay();
+      const daySchedule = schedule[daysOfWeek[today]] || [];
+
+      const dailyScheduleTable = document.querySelector("#daily-schedule tbody");
+      dailyScheduleTable.innerHTML = '';
+
+      daySchedule.forEach(lesson => {
+        const row = <tr>
+          <td>${lesson.number}</td>
+          <td>${lesson.subject}</td>
+          <td>${lesson.time}</td>
+        </tr>;
+        dailyScheduleTable.innerHTML += row;
+      });
+
+      const currentLesson = getCurrentLesson(daySchedule);
+      const currentLessonDiv = document.getElementById("current-lesson");
+      currentLessonDiv.textContent = currentLesson
+        ? Зараз урок: ${currentLesson.subject} (${currentLesson.time})
+        : "Зараз немає уроків.";
+
+      const weeklyScheduleTable = document.querySelector("#weekly-schedule");
+      weeklyScheduleTable.innerHTML = '';
+
+      const dayClasses = {
+        "Понеділок": "monday",
+        "Вівторок": "tuesday",
+        "Середа": "wednesday",
+        "Четвер": "thursday",
+        "П'ятниця": "friday"
+      };
+
+      for (const day in schedule) {
+        const dayLessons = schedule[day];
+        const dayClass = dayClasses[day];
+
+        dayLessons.forEach((lesson, index) => {
+          const rowClass = dayClass;
+          const row = <tr class="${rowClass}">
+            ${index === 0 ? <td rowspan="${dayLessons.length}">${day}</td> : ''}
             <td>${lesson.number}</td>
             <td>${lesson.subject}</td>
             <td>${lesson.time}</td>
-          </tr>
-        `;
-        dailyScheduleTable.innerHTML += row;
-      });
+          </tr>;
+          weeklyScheduleTable.innerHTML += row;
+        });
+      }
     }
 
     renderSchedule();
