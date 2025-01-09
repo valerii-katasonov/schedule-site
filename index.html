@@ -16,23 +16,18 @@
       color: white;
       text-align: center;
       padding: 1em 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    header img {
-      width: 90px;  /* Увеличено на 50% от предыдущего размера */
-      height: 90px; /* Увеличено на 50% от предыдущего размера */
-      border-radius: 15px; /* Закруглены углы */
     }
     .container {
-      max-width: 800px;
+      max-width: 1200px;
       margin: 20px auto;
       padding: 20px;
       background: white;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+    }
+    .schedule-content {
+      flex: 1;
     }
     .current-lesson {
       font-size: 1.5em;
@@ -81,42 +76,55 @@
     .friday {
       background-color: #fce4ec;
     }
+    .image-container {
+      width: 300px; /* Установите нужную ширину изображения */
+      padding: 10px;
+    }
+    .image-container img {
+      width: 100%; /* Установите ширину изображения как 100% контейнера */
+      border-radius: 15px; /* Закруглим углы */
+    }
   </style>
 </head>
 <body>
   <header>
-    <img src="https://push-school.com/wp-content/themes/push/images/LOGO.png" alt="Push School Logo">
-    <h1>Розклад уроків<br>1 клас<br>Push School Warsaw</h1>
+    <h1>Розклад уроків</h1>
+    <h2>1 клас <br> Push School Warsaw</h2>
   </header>
   <div class="container">
-    <div class="current-lesson" id="current-lesson">Зараз немає уроків.</div>
-    <h2>Розклад на сьогодні</h2>
-    <table id="daily-schedule">
-      <thead>
-        <tr>
-          <th>№</th>
-          <th>Урок</th>
-          <th>Час</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Данные добавляются JavaScript-ом -->
-      </tbody>
-    </table>
-    <h2>Розклад на тиждень</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>День</th>
-          <th>№</th>
-          <th>Урок</th>
-          <th>Час</th>
-        </tr>
-      </thead>
-      <tbody id="weekly-schedule">
-        <!-- Данные добавляются JavaScript-ом -->
-      </tbody>
-    </table>
+    <div class="schedule-content">
+      <div class="current-lesson" id="current-lesson">Зараз немає уроків.</div>
+      <h2>Розклад на сьогодні</h2>
+      <table id="daily-schedule">
+        <thead>
+          <tr>
+            <th>№</th>
+            <th>Урок</th>
+            <th>Час</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Данные добавляются JavaScript-ом -->
+        </tbody>
+      </table>
+      <h2>Розклад на тиждень</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>День</th>
+            <th>№</th>
+            <th>Урок</th>
+            <th>Час</th>
+          </tr>
+        </thead>
+        <tbody id="weekly-schedule">
+          <!-- Данные добавляются JavaScript-ом -->
+        </tbody>
+      </table>
+    </div>
+    <div class="image-container">
+      <img src="https://drive.google.com/uc?export=view&id=1x8YZ5H5d4FVYzRvDM3QjsNTlLXSxzDRE" alt="Logo">
+    </div>
   </div>
   <script>
     const schedule = {
