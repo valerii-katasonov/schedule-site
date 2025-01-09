@@ -133,21 +133,21 @@
       width: 100%;
     }
     .tables-container {
+      width: calc(100% + 25px); /* Увеличено на 20px */
+      max-width: 1120px; /* Увеличено на 20px от исходного */
       display: flex;
       justify-content: center;
       flex-direction: column;
       align-items: center;
       gap: 30px;
-      width: 100%;
       border: 2px solid #fff;
       border-radius: 10px;
       padding: 20px;
       background-color: white;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
       margin: 0 50px;
-      width: calc(100% + 5cm);
-      max-width: 1120px; /* Увеличено на 20px */
     }
+
 
     /* Медиа-запрос для адаптивности */
     @media screen and (max-width: 900px) {
@@ -176,6 +176,11 @@
       .image-container-right {
         margin-left: 50px;
       }
+    }
+
+    /* Увеличение ширины таблиц */
+    table {
+      width: calc(100% + 10px);
     }
   </style>
 </head>
@@ -222,5 +227,116 @@
       <img class="google-image" src="https://i.postimg.cc/3wpTvvmt/2.png" alt="Google Drive Image">
     </div>
   </div>
+
+  <script>
+    const schedule = {
+      "Понеділок": [
+        { number: 1, subject: "Навчання грамоти", time: "9:00 - 9:45" },
+        { number: 2, subject: "Навчання грамоти", time: "9:55 - 10:40" },
+        { number: 3, subject: "Математика", time: "10:50 - 11:35" },
+        { number: 4, subject: "Англійська мова", time: "11:55 - 12:40" },
+      ],
+      "Вівторок": [
+        { number: 1, subject: "Навчання грамоти", time: "9:00 - 9:45" },
+        { number: 2, subject: "Навчання грамоти", time: "9:55 - 10:40" },
+        { number: 3, subject: "Математика", time: "10:50 - 11:35" },
+        { number: 4, subject: "Przyroda", time: "11:55 - 12:40" },
+        { number: 5, subject: "Plastyka", time: "13:00 - 13:45" },
+      ],
+      "Середа": [
+        { number: 1, subject: "Навчання грамоти", time: "9:00 - 9:45" },
+        { number: 2, subject: "Математика", time: "9:55 - 10:40" },
+        { number: 3, subject: "Jezyk Polski", time: "10:50 - 11:35" },
+        { number: 4, subject: "Англійська мова", time: "11:55 - 12:40" },
+        { number: 5, subject: "Англійська мова", time: "13:00 - 13:45" },
+      ],
+      "Четвер": [
+        { number: 1, subject: "Навчання грамоти", time: "9:00 - 9:45" },
+        { number: 2, subject: "Навчання грамоти", time: "9:55 - 10:40" },
+        { number: 3, subject: "Jezyk Polski", time: "10:50 - 11:35" },
+        { number: 4, subject: "Математика", time: "11:55 - 12:40" },
+        { number: 5, subject: "Plastyka", time: "13:00 - 13:45" },
+        { number: 6, subject: "Англійська мова", time: "13:55 - 14:40" },
+      ],
+      "П'ятниця": [
+        { number: 1, subject: "Я досліджую світ", time: "9:00 - 9:45" },
+        { number: 2, subject: "Jezyk Polski", time: "9:55 - 10:40" },
+        { number: 3, subject: "Edukacja wczesnoszkolna", time: "10:50 - 11:35" },
+        { number: 4, subject: "Wyhowanie фізичне (басейн)", time: "11:55 - 12:40" },
+        { number: 5, subject: "Wyhowanie фізичне (басейн)", time: "13:00 - 13:45" },
+      ],
+    };
+
+    function getCurrentLesson(daySchedule) {
+      const now = new Date();
+      const currentHour = now.getHours();
+      const currentMinutes = now.getMinutes();
+      const currentTime = currentHour * 60 + currentMinutes;
+
+      for (let lesson of daySchedule) {
+        const [start, end] = lesson.time.split(" - ").map(time => {
+          const [hours, minutes] = time.split(":").map(Number);
+          return hours * 60 + minutes;
+        });
+        if (currentTime >= start && currentTime < end) {
+          return lesson;
+        }
+      }
+      return null;
+    }
+
+    function renderSchedule() {
+      const daysOfWeek = ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"];
+      const today = new Date().getDay();
+      const daySchedule = schedule[daysOfWeek[today]] || [];
+
+      const dailyScheduleTable = document.querySelector("#daily-schedule tbody");
+      dailyScheduleTable.innerHTML = '';
+
+      daySchedule.forEach(lesson => {
+        const row = `<tr>
+          <td>${lesson.number}</td>
+          <td>${lesson.subject}</td>
+          <td>${lesson.time}</td>
+        </tr>`;
+        dailyScheduleTable.innerHTML += row;
+      });
+
+      const currentLesson = getCurrentLesson(daySchedule);
+      const currentLessonDiv = document.getElementById("current-lesson");
+      currentLessonDiv.textContent = currentLesson
+        ? `Зараз урок: ${currentLesson.subject} (${currentLesson.time})`
+        : "Зараз немає уроків.";
+
+      const weeklyScheduleTable = document.querySelector("#weekly-schedule");
+      weeklyScheduleTable.innerHTML = '';
+
+      const dayClasses = {
+        "Понеділок": "monday",
+        "Вівторок": "tuesday",
+        "Середа": "wednesday",
+        "Четвер": "thursday",
+        "П'ятниця": "friday"
+      };
+
+      for (const day in schedule) {
+        const dayLessons = schedule[day];
+        const dayClass = dayClasses[day];
+
+        dayLessons.forEach((lesson, index) => {
+          const rowClass = dayClass;
+          const row = `<tr class="${rowClass}">
+            ${index === 0 ? `<td rowspan="${dayLessons.length}">${day}</td>` : ''}
+            <td>${lesson.number}</td>
+            <td>${lesson.subject}</td>
+            <td>${lesson.time}</td>
+          </tr>`;
+          weeklyScheduleTable.innerHTML += row;
+        });
+      }
+    }
+
+    renderSchedule();
+  </script>
 </body>
 </html>
