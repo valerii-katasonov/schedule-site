@@ -178,12 +178,21 @@
       const weeklyScheduleTable = document.querySelector("#weekly-schedule");
       weeklyScheduleTable.innerHTML = ''; // Очистить таблицу перед рендером
 
+      // Выделяем цвета для разных дней недели
+      const dayClasses = {
+        "Понеділок": "monday",
+        "Вівторок": "tuesday",
+        "Середа": "wednesday",
+        "Четвер": "thursday",
+        "П'ятниця": "friday"
+      };
+
       for (const day in schedule) {
         const dayLessons = schedule[day];
-        const dayClass = day.toLowerCase(); // Получаем класс для дня (понеділок -> monday, вівторок -> tuesday и т.д.)
+        const dayClass = dayClasses[day]; // Получаем класс для дня
 
         dayLessons.forEach((lesson, index) => {
-          const rowClass = dayClass; // Все уроки дня будут иметь свой цвет
+          const rowClass = dayClass; // Применяем цвет для дня недели
           const row = `<tr class="${rowClass}">
             ${index === 0 ? `<td rowspan="${dayLessons.length}">${day}</td>` : ''}
             <td>${lesson.number}</td>
