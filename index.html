@@ -104,16 +104,38 @@
       border-radius: 10px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     }
-    .image-container-left {
+    .links-container {
       flex-shrink: 0;
       width: 100%;
-      max-width: 500px;
+      max-width: 400px;
       padding: 20px;
       background-color: white;
       border-radius: 10px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
       margin-right: 50px;
     }
+
+    .links-container ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .links-container li {
+      margin-bottom: 10px;
+    }
+
+    .links-container a {
+      text-decoration: none;
+      color: #00bcd5;
+      font-weight: bold;
+    }
+
+    .links-container a:hover {
+      text-decoration: underline;
+      color: #0288d1;
+    }
+
     .image-container-right {
       flex-shrink: 0;
       width: 100%;
@@ -191,9 +213,12 @@
     <h1>Розклад уроків<br>1 клас<br>Push School Warsaw</h1>
   </header>
   <div class="container">
-    <div class="image-container-left">
-      <img class="google-image" src="https://i.postimg.cc/3wpTvvmt/2.png" alt="Google Drive Image">
-    </div>
+  <div class="links-container">
+    <h3>Корисні посилання:</h3>
+    <ul>
+    <li><a href="https://prosvita.net/" target="_blank">Просвіта</a></li>
+    </ul>
+  </div>
     <div class="tables-container">
       <div class="current-lesson" id="current-lesson">Зараз немає уроків.</div>
       <h2>Розклад на сьогодні</h2>
