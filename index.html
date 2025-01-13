@@ -209,26 +209,6 @@
     table {
       width: calc(100% + 10px);
     }
-/* Стиль для увеличенного изображения */
-    .image-modal {
-      display: none; /* Скрыто по умолчанию */
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.8); /* Полупрозрачный черный фон */
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-
-    .image-modal img {
-      max-width: 90%;
-      max-height: 90%;
-      border-radius: 10px;
-    }
-
   </style>
 </head>
 <body>
@@ -279,23 +259,6 @@
   </div>
 
  <script>
-
-    const imageModal = document.getElementById('image-modal');
-    const modalImage = document.getElementById('modal-image');
-    const googleImage = document.querySelector('.google-image');
-
-// Открыть модальное окно при клике на изображение
-    googleImage.addEventListener('click', () => {
-      modalImage.src = googleImage.src;
-      imageModal.style.display = 'flex';
-    });
-
-// Закрыть модальное окно при клике вне изображения
-    imageModal.addEventListener('click', () => {
-      imageModal.style.display = 'none';
-    });
-
-
 const schedule = {
   "Понеділок": [
     { number: 1, subject: "Навчання грамоти", time: "9:00 - 9:45" },
@@ -395,11 +358,11 @@ function renderSchedule() {
 
   daySchedule.forEach(lesson => {
     const isBreak = lesson.subject === "Перерва" || lesson.subject.includes("Обід");
-    const row = `<tr class="${isBreak ? 'highlight' : ''}">
+    const row = <tr class="${isBreak ? 'highlight' : ''}">
       <td>${lesson.number}</td>
       <td>${lesson.subject}</td>
       <td>${lesson.time}</td>
-    </tr>`;
+    </tr>;
     dailyScheduleTable.innerHTML += row;
   });
 
@@ -409,10 +372,10 @@ function renderSchedule() {
   if (currentLessonData) {
     if (currentLessonData.type === "lesson") {
       const lesson = currentLessonData.lesson;
-      currentLessonDiv.textContent = `Зараз урок: ${lesson.subject} (${lesson.time})`;
+      currentLessonDiv.textContent = Зараз урок: ${lesson.subject} (${lesson.time});
     } else if (currentLessonData.type === "break") {
       const lesson = currentLessonData.lesson;
-      currentLessonDiv.textContent = `Зараз: ${lesson.subject} (${lesson.time})`;
+      currentLessonDiv.textContent = Зараз: ${lesson.subject} (${lesson.time});
     } else if (currentLessonData.type === "finished") {
       currentLessonDiv.textContent = "Заняття закінчилися.";
     }
@@ -439,22 +402,18 @@ function renderSchedule() {
       const isBreak = lesson.subject === "Перерва" || lesson.subject.includes("Обід");
       const rowClass = isBreak ? "highlight" : dayClass;
 
-      const row = `<tr class="${rowClass}">
-        ${index === 0 ? `<td rowspan="${dayLessons.length}">${day}</td>` : ''}
+      const row = <tr class="${rowClass}">
+        ${index === 0 ? <td rowspan="${dayLessons.length}">${day}</td> : ''}
         <td>${lesson.number}</td>
         <td>${lesson.subject}</td>
         <td>${lesson.time}</td>
-      </tr>`;
+      </tr>;
       weeklyScheduleTable.innerHTML += row;
     });
   }
 }
 
 renderSchedule();
-    </script>
-    <div class="image-modal" id="image-modal">
-    <img src="" alt="Увеличенное изображение" id="modal-image">
-    </div>
-
+</script>
 </body>
 </html>
