@@ -358,11 +358,11 @@ function renderSchedule() {
 
   daySchedule.forEach(lesson => {
     const isBreak = lesson.subject === "Перерва" || lesson.subject.includes("Обід");
-    const row = <tr class="${isBreak ? 'highlight' : ''}">
+    const row = `<tr class="${isBreak ? 'highlight' : ''}">
       <td>${lesson.number}</td>
       <td>${lesson.subject}</td>
       <td>${lesson.time}</td>
-    </tr>;
+    </tr>`;
     dailyScheduleTable.innerHTML += row;
   });
 
@@ -372,10 +372,10 @@ function renderSchedule() {
   if (currentLessonData) {
     if (currentLessonData.type === "lesson") {
       const lesson = currentLessonData.lesson;
-      currentLessonDiv.textContent = Зараз урок: ${lesson.subject} (${lesson.time});
+      currentLessonDiv.textContent = `Зараз урок: ${lesson.subject} (${lesson.time})`;
     } else if (currentLessonData.type === "break") {
       const lesson = currentLessonData.lesson;
-      currentLessonDiv.textContent = Зараз: ${lesson.subject} (${lesson.time});
+      currentLessonDiv.textContent = `Зараз: ${lesson.subject} (${lesson.time})`;
     } else if (currentLessonData.type === "finished") {
       currentLessonDiv.textContent = "Заняття закінчилися.";
     }
@@ -402,12 +402,12 @@ function renderSchedule() {
       const isBreak = lesson.subject === "Перерва" || lesson.subject.includes("Обід");
       const rowClass = isBreak ? "highlight" : dayClass;
 
-      const row = <tr class="${rowClass}">
-        ${index === 0 ? <td rowspan="${dayLessons.length}">${day}</td> : ''}
+      const row = `<tr class="${rowClass}">
+        ${index === 0 ? `<td rowspan="${dayLessons.length}">${day}</td>` : ''}
         <td>${lesson.number}</td>
         <td>${lesson.subject}</td>
         <td>${lesson.time}</td>
-      </tr>;
+      </tr>`;
       weeklyScheduleTable.innerHTML += row;
     });
   }
