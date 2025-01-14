@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
-
+  
   <style>
     body {
       font-family: Montserrat, sans-serif;
@@ -254,7 +254,7 @@
       </table>
     </div>
     <div class="image-container-right">
-      <img class="google-image" src="https://i.postimg.cc/3wpTvvmt/2.png" alt="Google Drive Image">
+      <img class="google-image" src="https://i.postimg.cc/3wpTvvmt/2.png" alt="Google Drive Image" onclick="zoomImage(this)">
     </div>
   </div>
 
@@ -414,6 +414,17 @@ function renderSchedule() {
 }
 
 renderSchedule();
+
+    function zoomImage(img) {
+      // Проверяем, если картинка уже увеличена, то вернем её в исходный размер
+      if (img.style.transform === "scale(2)") {
+        img.style.transform = "scale(1)";
+      } else {
+        img.style.transform = "scale(2)";
+      }
+      img.style.transition = "transform 0.3s ease";  // Плавное увеличение
+    }
+
 </script>
 </body>
 </html>
