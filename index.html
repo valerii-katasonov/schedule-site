@@ -259,7 +259,7 @@
     </div>
   </div>
 
- <script>
+<script>
 const schedule = {
   "Понеділок": [
     { number: 1, subject: "Навчання грамоти", time: "9:00 - 9:45" },
@@ -314,6 +314,8 @@ const schedule = {
     { number: 4, subject: "Wyhowanie фізичне (басейн)", time: "13:00 - 14:00" },
     { number: " ", subject: "Шлях з басейну до школи на автобусі", time: "14:30 - 14:50" },
   ],
+  "Субота": [], // Пустой день, можно добавить расписание, если нужно
+  "Неділя": [], // Пустой день, можно добавить расписание, если нужно
 };
 
 function getCurrentLesson(daySchedule) {
@@ -360,11 +362,7 @@ function renderSchedule() {
 
   daySchedule.forEach(lesson => {
     const isBreak = lesson.subject === "Перерва" || lesson.subject.includes("Обід");
-    const row = `<tr class="${isBreak ? 'highlight' : ''}">
-      <td>${lesson.number}</td>
-      <td>${lesson.subject}</td>
-      <td>${lesson.time}</td>
-    </tr>`;
+    const row = `<tr class="${isBreak ? 'highlight' : ''}"><td>${lesson.number}</td><td>${lesson.subject}</td><td>${lesson.time}</td></tr>`;
     dailyScheduleTable.innerHTML += row;
   });
 
@@ -394,6 +392,8 @@ function renderSchedule() {
     "Середа": "wednesday",
     "Четвер": "thursday",
     "П'ятниця": "friday",
+    "Субота": "saturday", // можно добавить класс для субботы
+    "Неділя": "sunday", // можно добавить класс для воскресенья
   };
 
   for (const day in schedule) {
@@ -417,16 +417,15 @@ function renderSchedule() {
 
 renderSchedule();
 
-    function zoomImage(img) {
-      // Проверяем, если картинка уже увеличена, то вернем её в исходный размер
-      if (img.style.transform === "scale(2)") {
-        img.style.transform = "scale(1)";
-      } else {
-        img.style.transform = "scale(2)";
-      }
-      img.style.transition = "transform 0.3s ease";  // Плавное увеличение
-    }
-
+function zoomImage(img) {
+  // Проверяем, если картинка уже увеличена, то вернем её в исходный размер
+  if (img.style.transform === "scale(2)") {
+    img.style.transform = "scale(1)";
+  } else {
+    img.style.transform = "scale(2)";
+  }
+  img.style.transition = "transform 0.3s ease";  // Плавное увеличение
+}
 </script>
 </body>
 </html>
