@@ -401,28 +401,16 @@ function renderSchedule() {
     });
   }
 
-  const weeklyScheduleTable = document.querySelector("#weekly-schedule");
+  const weeklyScheduleTable = document.querySelector("#weekly-schedule tbody");
   weeklyScheduleTable.innerHTML = '';
-
-  const dayClasses = {
-    "Понеділок": "monday",
-    "Вівторок": "tuesday",
-    "Середа": "wednesday",
-    "Четвер": "thursday",
-    "П'ятниця": "friday",
-    "Субота": "saturday", // можно добавить класс для субботы
-    "Неділя": "sunday", // можно добавить класс для воскресенья
-  };
 
   for (const day in schedule) {
     const dayLessons = schedule[day];
-    const dayClass = dayClasses[day] || "";
 
     dayLessons.forEach((lesson, index) => {
       const isBreak = lesson.subject === "Перерва" || lesson.subject.includes("Обід");
-      const rowClass = isBreak ? "highlight" : dayClass;
 
-      const row = `<tr class="${rowClass}">
+      const row = `<tr class="${isBreak ? 'highlight' : ''}">
         ${index === 0 ? `<td rowspan="${dayLessons.length}">${day}</td>` : ''}
         <td>${lesson.number}</td>
         <td>${lesson.subject}</td>
@@ -432,10 +420,10 @@ function renderSchedule() {
     });
   }
 
-  if (nextDaySchedule.length > 0) {
-    const nextDayScheduleTable = document.querySelector("#next-day-schedule");
-    nextDayScheduleTable.innerHTML = '';
+  const nextDayScheduleTable = document.querySelector("#next-day-schedule tbody");
+  nextDayScheduleTable.innerHTML = '';
 
+  if (nextDaySchedule.length > 0) {
     nextDaySchedule.forEach(lesson => {
       const row = `<tr>
         <td>${lesson.number}</td>
@@ -448,17 +436,8 @@ function renderSchedule() {
 }
 
 renderSchedule();
-
-function zoomImage(img) {
-  // Проверяем, если картинка уже увеличена, то вернем её в исходный размер
-  if (img.style.transform === "scale(2)") {
-    img.style.transform = "scale(1)";
-  } else {
-    img.style.transform = "scale(2)";
-  }
-  img.style.transition = "transform 0.3s ease";  // Плавное увеличение
-}
 </script>
+
 
 </body>
 </html>
