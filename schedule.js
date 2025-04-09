@@ -64,7 +64,7 @@ const schedule = {
   ],
   "Четвер": [
     { number: 1, subject: { uk: "Навчання грамоти", pl: "Nauka pisania i czytania" }, time: "9:00 - 9:45" },
-    { number: " ", subject: { uk: "Перерва that", pl: "Przerwa" }, time: "9:45 - 9:55" },
+    { number: " ", subject: { uk: "Перерва", pl: "Przerwa" }, time: "9:45 - 9:55" },
     { number: 2, subject: { uk: "Навчання грамоти", pl: "Nauka pisania i czytania" }, time: "9:55 - 10:40" },
     { number: " ", subject: { uk: "Перерва", pl: "Przerwa" }, time: "10:40 - 10:50" },
     { number: 3, subject: { uk: "Jezyk Polski", pl: "Język polski" }, time: "10:50 - 11:35" },
@@ -111,7 +111,7 @@ const schedule = {
     { number: " ", subject: { uk: "Шлях зі школи до басейну на автобусі", pl: "Droga ze szkoły na basen autobusem" }, time: "12:20 - 12:45" },
     { number: 4, subject: { uk: "Wyhowanie фізичне (басейн)", pl: "Wychowanie fizyczne (basen)" }, time: "13:00 - 14:00" },
     { number: " ", subject: { uk: "Шлях з басейну до школи на автобусі", pl: "Droga z basenu do szkoły autobusem" }, time: "14:30 - 14:55" },
-  ],
+  ]
 };
 
 // Додаємо schedule у глобальний об'єкт window
