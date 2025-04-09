@@ -95,8 +95,8 @@
       background: rgba(255, 255, 255, 0.4);
     }
 
-    .theme-toggle { right: 6rem; }
-    .notify-toggle { right: 3.5rem; }
+    .theme-toggle { right: 8rem; }
+    .notify-toggle { right: 5.5rem; }
 
     .logo-intro {
       position: fixed;
@@ -388,6 +388,23 @@
       .current-lesson {
         font-size: 1.1rem;
       }
+
+      .theme-toggle {
+        right: 6rem;
+      }
+
+      .notify-toggle {
+        right: 3.5rem;
+      }
+
+      .language-buttons {
+        right: 0.5rem;
+      }
+
+      .language-buttons button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+      }
     }
 
     @media screen and (max-width: 480px) {
@@ -629,7 +646,7 @@
     function renderCurrentLesson() {
       const lang = translations[currentLanguage];
       const today = new Date().getDay();
-      const todayName = lang.daysOfWeek[today];
+      const todayName = translations['uk'].daysOfWeek[today]; // Ключі в schedule.js українською
       const cachedSchedule = loadCachedSchedule();
       const daySchedule = cachedSchedule[todayName] || [];
       const currentLessonData = getCurrentLesson(daySchedule);
@@ -672,17 +689,17 @@
     function renderWeeklySchedule() {
       const lang = translations[currentLanguage];
       const today = new Date().getDay();
-      const todayName = lang.daysOfWeek[today];
+      const todayName = translations['uk'].daysOfWeek[today]; // Ключі в schedule.js українською
       const cachedSchedule = loadCachedSchedule();
       const weeklyScheduleTable = document.querySelector("#weekly-schedule");
       weeklyScheduleTable.innerHTML = '';
 
       const dayClasses = {
-        "Понеділок": "monday", "Poniedziałek": "monday",
-        "Вівторок": "tuesday", "Wtorek": "tuesday",
-        "Середа": "wednesday", "Środa": "wednesday",
-        "Четвер": "thursday", "Czwartek": "thursday",
-        "П'ятниця": "friday", "Piątek": "friday"
+        "Понеділок": "monday",
+        "Вівторок": "tuesday",
+        "Середа": "wednesday",
+        "Четвер": "thursday",
+        "П'ятниця": "friday"
       };
 
       for (const day in cachedSchedule) {
@@ -715,12 +732,12 @@
       lang.filterDays.forEach((day, index) => {
         const button = document.createElement("button");
         button.textContent = day;
-        button.dataset.day = day;
+        button.dataset.day = translations['uk'].filterDays[index]; // Українські назви для ключів
         if (index + 1 === today) button.classList.add("active");
         button.addEventListener("click", () => {
           document.querySelectorAll(".day-filter button").forEach(btn => btn.classList.remove("active"));
           button.classList.add("active");
-          renderDailySchedule(day);
+          renderDailySchedule(button.dataset.day);
         });
         filterContainer.appendChild(button);
       });
@@ -794,7 +811,7 @@
 
     const today = new Date().getDay();
     updateLanguage();
-    renderDailySchedule(translations[currentLanguage].daysOfWeek[today]);
+    renderDailySchedule(translations['uk'].daysOfWeek[today]);
     renderWeeklySchedule();
     renderDayFilter();
     renderCurrentLesson();
