@@ -14,7 +14,7 @@ const schedule = {
     { number: " ", subject: "Перерва", time: "9:45 - 9:55" },
     { number: 2, subject: "Навчання грамоти", time: "9:55 - 10:40" },
     { number: " ", subject: "Перерва", time: "10:40 - 10:50" },
-    { number enforce: 3, subject: "Математика", time: "10:50 - 11:35" },
+    { number: 3, subject: "Математика", time: "10:50 - 11:35" },
     { number: " ", subject: "Обід 1-4 класи", time: "11:35 - 11:55" },
     { number: 4, subject: "Przyroda", time: "11:55 - 12:40" },
     { number: " ", subject: "Обід 5-6 класи", time: "12:40 - 13:00" },
@@ -39,7 +39,7 @@ const schedule = {
     { number: 3, subject: "Jezyk Polski", time: "10:50 - 11:35" },
     { number: " ", subject: "Обід 1-4 класи", time: "11:35 - 11:55" },
     { number: 4, subject: "Математика", time: "11:55 - 12:40" },
-    { number: " ", subject: "Обід 5-6 класи", time: "12:40 - 13:00" },
+    { number: " ", subject: "Обід 5-6 класи", time: "12:40-13:00" },
     { number: 5, subject: "Plastyka", time: "13:00 - 13:45" },
     { number: " ", subject: "Перерва", time: "13:45 - 13:55" },
     { number: 6, subject: "Англійська мова", time: "13:55 - 14:40" },
@@ -58,9 +58,5 @@ const schedule = {
   ],
 };
 
-// Експортуємо schedule для використання в інших файлах
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = schedule; // Для Node.js
-} else {
-  window.schedule = schedule; // Для браузера
-}
+// Додаємо schedule у глобальний об'єкт window
+window.schedule = schedule;
