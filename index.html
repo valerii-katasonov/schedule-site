@@ -16,7 +16,7 @@
         min-height: 100vh;
         transition: background 0.5s ease;
         position: relative;
-        font-size: 16px; /* Базовий розмір для rem */
+        font-size: 16px;
     }
 
     body.dark-theme {
@@ -76,7 +76,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 120px; /* Зменшено для мобільних */
+        width: 120px;
         height: 120px;
         border-radius: 50%;
         border: 3px solid rgba(255,255,255,0.2);
@@ -141,7 +141,7 @@
         border-radius: 8px;
         cursor: pointer;
         transition: background 0.3s ease;
-        min-width: 44px; /* Рекомендація Apple */
+        min-width: 44px;
         min-height: 44px;
         font-size: 1rem;
     }
@@ -161,8 +161,8 @@
     }
 
     .table-wrapper {
-        overflow-x: auto; /* Горизонтальна прокрутка для таблиць */
-        -webkit-overflow-scrolling: touch; /* Плавна прокрутка на iOS */
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     table {
@@ -186,6 +186,7 @@
         text-align: center;
         border-bottom: 1px solid rgba(0,0,0,0.05);
         font-size: 1rem;
+        white-space: nowrap; /* Запобігає перенесенню тексту */
     }
 
     body.dark-theme th, body.dark-theme td {
@@ -326,7 +327,6 @@
         to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Медіа-запроси для iPhone */
     @media screen and (max-width: 768px) {
         .container {
             flex-direction: column;
@@ -387,6 +387,11 @@
         th, td {
             padding: 0.6rem 0.8rem;
             font-size: 0.9rem;
+        }
+
+        /* Приховуємо стовпець "№" на малих екранах */
+        table th:nth-child(2), table td:nth-child(2) {
+            display: none;
         }
 
         .links-container a {
