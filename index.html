@@ -5,239 +5,347 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <title>Розклад уроків</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
-  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     body {
-      font-family: Montserrat, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
+        font-family: 'Montserrat', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        transition: background 0.5s ease;
     }
+
+    body.dark-theme {
+        background: linear-gradient(135deg, #2d2d99 0%, #1a1a66 100%);
+        color: #fff;
+    }
+
     header {
-      background-color: #121240;
-      color: white;
-      text-align: center;
-      padding: 1em 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
+        background: linear-gradient(45deg, #00bfd1, #006d77); /* Світла тема */
+        color: white;
+        padding: 1.5em 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        position: relative;
     }
+
+    body.dark-theme header {
+        background: linear-gradient(45deg, #003d44, #006d77); /* Темна тема */
+    }
+
     header img {
-      width: 90px;
-      height: 90px;
-      border-radius: 15px;
+        width: 100px;
+        height: 100px;
+        border-radius: 20px;
+        border: 3px solid rgba(255,255,255,0.2);
+        animation: fadeIn 1s ease-in;
     }
+
+    header h1 {
+        font-size: 2em;
+        margin: 0;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        animation: fadeIn 1s ease-in;
+    }
+
+    .theme-toggle, .notify-toggle {
+        position: absolute;
+        top: 20px;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5em;
+        cursor: pointer;
+    }
+
+    .theme-toggle { right: 60px; }
+    .notify-toggle { right: 20px; }
+
     .container {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      max-width: 2000px;
-      margin: 20px auto;
-      padding: 20px;
-      gap: 50px;
-      flex-wrap: wrap; /* Добавляем для адаптивности */
+        max-width: 2000px;
+        margin: 30px auto;
+        padding: 0 20px;
+        display: flex;
+        gap: 30px;
+        justify-content: center;
+        animation: fadeInUp 0.8s ease-in;
     }
-    .schedule-container {
-      flex: 1;
-      text-align: center;
-      max-width: 800px;
-    }
+
     .current-lesson {
-      font-size: 1.5em;
-      color: #333;
-      background-color: #e0f7fa;
-      border-left: 6px solid #4caf50;
-      padding: 15px;
-      margin-bottom: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
+        font-size: 1.4em;
+        color: #1a1a66;
+        background: white;
+        border-left: 6px solid #4CAF50;
+        padding: 20px;
+        margin: 0 0 25px;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+
+    body.dark-theme .current-lesson {
+        background: #333;
+        color: #fff;
+    }
+
     .current-lesson:hover {
-      background-color: #b2ebf2;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
     }
+
+    .day-filter {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .day-filter button {
+        padding: 8px 15px;
+        border: none;
+        background: #f8f9fa;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .day-filter button.active {
+        background: #4CAF50;
+        color: white;
+    }
+
+    body.dark-theme .day-filter button {
+        background: #555;
+        color: #fff;
+    }
+
+    body.dark-theme .day-filter button.active {
+        background: #66BB6A;
+    }
+
     table {
-      width: calc(100% + 50px);
-      border-collapse: collapse;
-      margin-bottom: 20px;
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-bottom: 25px;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
     }
+
+    body.dark-theme table {
+        background: #444;
+        color: #fff;
+    }
+
     th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: center;
+        padding: 12px 15px;
+        text-align: center;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
     }
+
+    body.dark-theme th, body.dark-theme td {
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
     th {
-      background-color: #f2f2f2;
+        background: #f8f9fa;
+        font-weight: 600;
+        color: #333;
     }
+
+    body.dark-theme th {
+        background: #555;
+    }
+
     .highlight {
-      background-color: #f0f0f0;
+        background: #f5f5f5;
+        font-style: italic;
     }
-    .monday {
-      background-color: #d1f7e7;
+
+    body.dark-theme .highlight {
+        background: #555;
     }
-    .tuesday {
-      background-color: #e0f7fa;
+
+    .monday { background: rgba(173, 216, 230, 0.6); } /* Світло-голубий */
+    .tuesday { background: rgba(144, 238, 144, 0.6); } /* Світло-зелений */
+    .wednesday { background: rgba(255, 255, 224, 0.6); } /* Світло-жовтий */
+    .thursday { background: rgba(255, 218, 185, 0.6); } /* Світло-оранжевий */
+    .friday { background: rgba(255, 192, 203, 0.6); } /* Світло-рожевий */
+    .current-day { background: rgba(76, 175, 80, 0.3); }
+
+    .tables-container {
+        padding: 25px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        margin: 0;
     }
-    .wednesday {
-      background-color: #ffecb3;
+
+    body.dark-theme .tables-container {
+        background: #333;
     }
-    .thursday {
-      background-color: #fff3e0;
-    }
-    .friday {
-      background-color: #fce4ec;
-    }
-    .google-image {
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-    .image-container {
-      flex-shrink: 0;
-      width: 100%;
-      max-width: 400px;
-      padding: 20px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    }
+
     .links-container {
-      flex-shrink: 0;
-      width: 100%;
-      max-width: 400px;
-      padding: 20px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-      margin-right: 50px;
+        padding: 25px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        max-width: 350px;
+        transition: transform 0.3s ease;
     }
 
-    .links-container ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
+    body.dark-theme .links-container {
+        background: #333;
     }
 
-    .links-container li {
-      margin-bottom: 10px;
+    .links-container:hover {
+        transform: translateY(-5px);
+    }
+
+    .links-container h3 {
+        color: #1a1a66;
+        margin: 0 0 15px;
+        font-size: 1.2em;
+    }
+
+    body.dark-theme .links-container h3 {
+        color: #fff;
     }
 
     .links-container a {
-      text-decoration: none;
-      color: #00bcd5;
-      font-weight: bold;
+        color: #2d2d99;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 0;
+    }
+
+    body.dark-theme .links-container a {
+        color: #4CAF50;
     }
 
     .links-container a:hover {
-      text-decoration: underline;
-      color: #0288d1;
+        color: #4CAF50;
+    }
+
+    body.dark-theme .links-container a:hover {
+        color: #66BB6A;
     }
 
     .image-container-right {
-      flex-shrink: 0;
-      width: 100%;
-      max-width: 500px;
-      padding: 20px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-      margin-left: 50px;
-    }
-    .schedule-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 50px;
-      flex-wrap: nowrap;
-      width: 100%;
-    }
-    .tables-container {
-      width: calc(100% + 25px); /* Увеличено на 20px */
-      width: calc(100% + 50px); /* Увеличено на 20px */
-      max-width: 1500px; /* Увеличено на 20px от исходного */
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      border: 2px solid #fff;
-      border-radius: 10px;
-      padding: 20px;
-      background-color: white;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-      margin: 0 50px;
+        padding: 20px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        max-width: 450px;
+        transition: transform 0.3s ease;
     }
 
+    body.dark-theme .image-container-right {
+        background: #333;
+    }
 
-    /* Медиа-запрос для адаптивности */
-    @media screen and (max-width: 900px) {
-      .container {
-        flex-direction: column;
-        gap: 30px;
-      }
-      .image-container, .image-container-left, .image-container-right {
-        max-width: 90%;
-        margin-left: 0;
-        margin-right: 0;
-      }
-      .tables-container {
+    .image-container-right:hover {
+        transform: translateY(-5px);
+    }
+
+    .google-image {
         width: 100%;
-        margin: 0;
-      }
-    }
-    /* Адаптивное расположение картинок на больших экранах */
-    @media screen and (min-width: 900px) {
-      .container {
-        flex-wrap: nowrap;
-      }
-      .image-container-left {
-        margin-right: 50px;
-      }
-      .image-container-right {
-        margin-left: 50px;
-      }
+        border-radius: 10px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        touch-action: pinch-zoom;
     }
 
-    /* Увеличение ширины таблиц */
-    table {
-      width: calc(100% + 10px);
+    h2 {
+        color: #1a1a66;
+        font-size: 1.6em;
+        margin: 0 0 20px;
+        text-align: center;
+    }
+
+    body.dark-theme h2 {
+        color: #fff;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media screen and (max-width: 900px) {
+        .container {
+            flex-direction: column;
+            padding: 0 15px;
+        }
+
+        .links-container, .image-container-right {
+            max-width: 100%;
+            margin: 0 0 20px;
+        }
+
+        .tables-container {
+            width: 100%;
+        }
+
+        header {
+            padding: 1em 0;
+        }
+
+        header img {
+            width: 80px;
+            height: 80px;
+        }
+
+        .day-filter {
+            flex-wrap: wrap;
+        }
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="https://cdn-icons-png.flaticon.com/512/4751/4751951.png" alt="Push School Logo">
-    <h1>Розклад уроків<br>1 клас</h1>
+    <img src="https://i.postimg.cc/WbY9TdDp/PushIco.png" alt="Push School Logo">
+    <h1>Розклад уроків<br>1 клас<br>Push School Warsaw</h1>
+    <button class="theme-toggle" aria-label="Переключити тему"><i class="fas fa-moon"></i></button>
+    <button class="notify-toggle" aria-label="Увімкнути сповіщення"><i class="fas fa-bell"></i></button>
   </header>
   <div class="container">
-  <div class="links-container">
-    <h3>Корисні посилання:</h3>
-    <ul>
-    <li><a href="https://prosvita.net/" target="_blank">Просвіта</a></li>
-    </ul>
-    <h3>Підручники:</h3>
-    <ul>
-    <li><a href="https://online.flipbuilder.com/sdtta/acov/" target="_blank">Academy Stars 1: Pupil's book</a></li>
-    <li><a href="https://online.flipbuilder.com/sdtta/mxjn/" target="_blank">Academy Stars 1: Workbook</a></li>
-    <li><a href="https://shkola.in.ua/1185-bukvar-1-klas-ponomarova-2018-chastyna-1.html" target="_blank">Буквар 1 клас (частина 1) / Пономарьова</a></li>
-    <li><a href="https://shkola.in.ua/1186-bukvar-1-klas-ponomarova-2018-chastyna-2.html" target="_blank">Буквар 1 клас (частина 2) / Пономарьова</a></li>
-    <li><a href="https://znayshov.com/FR/12164/Propisi_1kl_Ponomarova_2.pdf" target="_blank">Мій перший зошит. Прописи. 1 клас / Гусельнікова</a></li>
-    <li><a href="https://shkola.in.ua/2808-matematyka-1-klas-his-2023.html" target="_blank">Математика 1 клас / Гісь</a></li>
-
-    </ul>
-  </div>
+    <div class="links-container">
+      <h3>Корисні посилання:</h3>
+      <ul>
+        <li><a href="https://prosvita.net/" target="_blank"><i class="fas fa-link"></i> Просвіта</a></li>
+      </ul>
+      <h3>Підручники:</h3>
+      <ul>
+        <li><a href="https://online.flipbuilder.com/sdtta/acov/" target="_blank"><i class="fas fa-book"></i> Academy Stars 1: Pupil's book</a></li>
+        <li><a href="https://online.flipbuilder.com/sdtta/mxjn/" target="_blank"><i class="fas fa-book"></i> Academy Stars 1: Workbook</a></li>
+        <li><a href="https://shkola.in.ua/1185-bukvar-1-klas-ponomarova-2018-chastyna-1.html" target="_blank"><i class="fas fa-book"></i> Буквар 1 клас (частина 1) / Пономарьова</a></li>
+        <li><a href="https://shkola.in.ua/1186-bukvar-1-klas-ponomarova-2018-chastyna-2.html" target="_blank"><i class="fas fa-book"></i> Буквар 1 клас (частина 2)Gabriela Ponomarova</a></li>
+        <li><a href="https://znayshov.com/FR/12164/Propisi_1kl_Ponomarova_2.pdf" target="_blank"><i class="fas fa-book"></i> Мій перший зошит. Прописи. 1 клас / Гусельнікова</a></li>
+        <li><a href="https://shkola.in.ua/2808-matematyka-1-klas-his-2023.html" target="_blank"><i class="fas fa-book"></i> Математика 1 клас / Гісь</a></li>
+      </ul>
+    </div>
     <div class="tables-container">
-      <div class="current-lesson" id="current-lesson">Зараз немає уроків.</div>
+      <div class="current-lesson" id="current-lesson" role="alert">Зараз немає уроків.</div>
       <h2>Розклад на сьогодні</h2>
-      <table id="daily-schedule">
+      <div class="day-filter" id="day-filter"></div>
+      <table id="daily-schedule" role="grid">
         <thead>
           <tr>
             <th>№</th>
@@ -245,12 +353,10 @@
             <th>Час</th>
           </tr>
         </thead>
-        <tbody>
-          <!-- Данные добавляются JavaScript-ом -->
-        </tbody>
+        <tbody></tbody>
       </table>
       <h2>Розклад на тиждень</h2>
-      <table>
+      <table role="grid">
         <thead>
           <tr>
             <th>День</th>
@@ -259,17 +365,15 @@
             <th>Час</th>
           </tr>
         </thead>
-        <tbody id="weekly-schedule">
-          <!-- Данные добавляются JavaScript-ом -->
-        </tbody>
+        <tbody id="weekly-schedule"></tbody>
       </table>
     </div>
     <div class="image-container-right">
-      <img class="google-image" src="https://i.postimg.cc/W1RVp0n2/2.png" alt="Google Drive Image" onclick="zoomImage(this)">
+      <img class="google-image" src="https://i.postimg.cc/W1RVp0n2/2.png" alt="Google Drive Image">
     </div>
   </div>
 
- <script>
+  <script>
 const schedule = {
   "Понеділок": [
     { number: 1, subject: "Навчання грамоти", time: "9:00 - 9:45" },
@@ -329,6 +433,15 @@ const schedule = {
   ],
 };
 
+function cacheSchedule() {
+  localStorage.setItem('schedule', JSON.stringify(schedule));
+}
+
+function loadCachedSchedule() {
+  const cached = localStorage.getItem('schedule');
+  return cached ? JSON.parse(cached) : schedule;
+}
+
 function getCurrentLesson(daySchedule) {
   const now = new Date();
   const currentHour = now.getHours();
@@ -349,7 +462,6 @@ function getCurrentLesson(daySchedule) {
     }
   }
 
-  // Если текущее время после всех уроков
   if (daySchedule.length > 0) {
     const lastLessonEnd = daySchedule[daySchedule.length - 1].time.split(" - ")[1];
     const [hours, minutes] = lastLessonEnd.split(":").map(Number);
@@ -363,11 +475,34 @@ function getCurrentLesson(daySchedule) {
   return null;
 }
 
-function renderSchedule() {
+function renderCurrentLesson() {
   const daysOfWeek = ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"];
   const today = new Date().getDay();
-  const daySchedule = schedule[daysOfWeek[today]] || [];
+  const todayName = daysOfWeek[today];
+  const cachedSchedule = loadCachedSchedule();
+  const daySchedule = cachedSchedule[todayName] || [];
+  const currentLessonData = getCurrentLesson(daySchedule);
+  const currentLessonDiv = document.getElementById("current-lesson");
 
+  if (currentLessonData) {
+    if (currentLessonData.type === "lesson") {
+      const lesson = currentLessonData.lesson;
+      currentLessonDiv.textContent = `Зараз урок: ${lesson.subject} (${lesson.time})`;
+      if (notificationsEnabled) notifyLesson(lesson);
+    } else if (currentLessonData.type === "break") {
+      const lesson = currentLessonData.lesson;
+      currentLessonDiv.textContent = `Зараз: ${lesson.subject} (${lesson.time})`;
+    } else if (currentLessonData.type === "finished") {
+      currentLessonDiv.textContent = "Заняття закінчилися.";
+    }
+  } else {
+    currentLessonDiv.textContent = "Зараз немає уроків.";
+  }
+}
+
+function renderDailySchedule(selectedDay) {
+  const cachedSchedule = loadCachedSchedule();
+  const daySchedule = cachedSchedule[selectedDay] || [];
   const dailyScheduleTable = document.querySelector("#daily-schedule tbody");
   dailyScheduleTable.innerHTML = '';
 
@@ -380,24 +515,13 @@ function renderSchedule() {
     </tr>`;
     dailyScheduleTable.innerHTML += row;
   });
+}
 
-  const currentLessonData = getCurrentLesson(daySchedule);
-  const currentLessonDiv = document.getElementById("current-lesson");
-
-  if (currentLessonData) {
-    if (currentLessonData.type === "lesson") {
-      const lesson = currentLessonData.lesson;
-      currentLessonDiv.textContent = `Зараз урок: ${lesson.subject} (${lesson.time})`;
-    } else if (currentLessonData.type === "break") {
-      const lesson = currentLessonData.lesson;
-      currentLessonDiv.textContent = `Зараз: ${lesson.subject} (${lesson.time})`;
-    } else if (currentLessonData.type === "finished") {
-      currentLessonDiv.textContent = "Заняття закінчилися.";
-    }
-  } else {
-    currentLessonDiv.textContent = "Зараз немає уроків.";
-  }
-
+function renderWeeklySchedule() {
+  const daysOfWeek = ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"];
+  const today = new Date().getDay();
+  const todayName = daysOfWeek[today];
+  const cachedSchedule = loadCachedSchedule();
   const weeklyScheduleTable = document.querySelector("#weekly-schedule");
   weeklyScheduleTable.innerHTML = '';
 
@@ -409,13 +533,14 @@ function renderSchedule() {
     "П'ятниця": "friday",
   };
 
-  for (const day in schedule) {
-    const dayLessons = schedule[day];
+  for (const day in cachedSchedule) {
+    const dayLessons = cachedSchedule[day];
     const dayClass = dayClasses[day] || "";
+    const isToday = day === todayName ? "current-day" : "";
 
     dayLessons.forEach((lesson, index) => {
       const isBreak = lesson.subject === "Перерва" || lesson.subject.includes("Обід");
-      const rowClass = isBreak ? "highlight" : dayClass;
+      const rowClass = isBreak ? "highlight" : `${dayClass} ${isToday}`;
 
       const row = `<tr class="${rowClass}">
         ${index === 0 ? `<td rowspan="${dayLessons.length}">${day}</td>` : ''}
@@ -428,18 +553,118 @@ function renderSchedule() {
   }
 }
 
-renderSchedule();
+function renderDayFilter() {
+  const daysOfWeek = ["Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця"];
+  const today = new Date().getDay();
+  const filterContainer = document.getElementById("day-filter");
+  filterContainer.innerHTML = '';
 
-    function zoomImage(img) {
-      // Проверяем, если картинка уже увеличена, то вернем её в исходный размер
-      if (img.style.transform === "scale(2)") {
-        img.style.transform = "scale(1)";
-      } else {
-        img.style.transform = "scale(2)";
-      }
-      img.style.transition = "transform 0.3s ease";  // Плавное увеличение
+  daysOfWeek.forEach((day, index) => {
+    const button = document.createElement("button");
+    button.textContent = day;
+    button.dataset.day = day;
+    if (index + 1 === today) button.classList.add("active");
+    button.addEventListener("click", () => {
+      document.querySelectorAll(".day-filter button").forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+      renderDailySchedule(day);
+    });
+    filterContainer.appendChild(button);
+  });
+}
+
+let notificationsEnabled = false;
+
+function requestNotificationPermission() {
+  if (!("Notification" in window)) {
+    alert("Ваш браузер не підтримує сповіщення.");
+    return;
+  }
+
+  Notification.requestPermission().then(permission => {
+    if (permission === "granted") {
+      notificationsEnabled = true;
+      document.querySelector('.notify-toggle i').classList.replace('fa-bell', 'fa-bell-slash');
     }
+  });
+}
 
+function notifyLesson(lesson) {
+  if (notificationsEnabled && Notification.permission === "granted") {
+    new Notification("Поточний урок", {
+      body: `${lesson.subject} (${lesson.time})`,
+      icon: "https://cdn-icons-png.flaticon.com/512/4751/4751951.png"
+    });
+  }
+}
+
+function handleTouchZoom(img) {
+  let scale = 1;
+  let startDistance = 0;
+
+  img.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 2) {
+      startDistance = Math.hypot(
+        e.touches[0].pageX - e.touches[1].pageX,
+        e.touches[0].pageY - e.touches[1].pageY
+      );
+    }
+  });
+
+  img.addEventListener('touchmove', (e) => {
+    if (e.touches.length === 2) {
+      const currentDistance = Math.hypot(
+        e.touches[0].pageX - e.touches[1].pageX,
+        e.touches[0].pageY - e.touches[1].pageY
+      );
+      scale = currentDistance / startDistance;
+      img.style.transform = `scale(${Math.min(Math.max(scale, 1), 2)})`;
+      e.preventDefault();
+    }
+  });
+
+  img.addEventListener('touchend', () => {
+    if (scale < 1.5) img.style.transform = 'scale(1)';
+  });
+
+  img.addEventListener('click', () => {
+    if (img.style.transform === "scale(2)") {
+      img.style.transform = "scale(1)";
+    } else {
+      img.style.transform = "scale(2)";
+    }
+    img.style.transition = "transform 0.3s ease";
+  });
+}
+
+// Ініціалізація
+const daysOfWeek = ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"];
+const today = new Date().getDay();
+renderDailySchedule(daysOfWeek[today]);
+renderWeeklySchedule();
+renderDayFilter();
+renderCurrentLesson();
+setInterval(renderCurrentLesson, 30000);
+cacheSchedule();
+
+document.querySelector('.theme-toggle').addEventListener('click', () => {
+  document.body.classList.toggle('dark-theme');
+  const icon = document.querySelector('.theme-toggle i');
+  icon.classList.toggle('fa-moon');
+  icon.classList.toggle('fa-sun');
+});
+
+document.querySelector('.notify-toggle').addEventListener('click', () => {
+  if (!notificationsEnabled) {
+    requestNotificationPermission();
+  } else {
+    notificationsEnabled = false;
+    document.querySelector('.notify-toggle i').classList.replace('fa-bell-slash', 'fa-bell');
+  }
+});
+
+const image = document.querySelector('.google-image');
+handleTouchZoom(image);
 </script>
 </body>
 </html>
