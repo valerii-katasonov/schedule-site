@@ -1,4 +1,3 @@
-// schedule.js
 const schedule = {
   "Понеділок": [
     { number: 1, subject: { uk: "Навчання грамоти", pl: "Nauka pisania i czytania" }, time: "9:00 - 9:45" },
@@ -58,5 +57,4 @@ const schedule = {
   ],
 };
 
-// Додаємо schedule у глобальний об'єкт window
 window.schedule = schedule;
