@@ -586,7 +586,7 @@
 
       renderDayFilter();
       renderCurrentLesson();
-      renderDailySchedule(translations[currentLanguage].daysOfWeek[new Date().getDay()]);
+      renderDailySchedule(translations['uk'].daysOfWeek[new Date().getDay()]);
       renderWeeklySchedule();
     }
 
@@ -646,7 +646,7 @@
     function renderCurrentLesson() {
       const lang = translations[currentLanguage];
       const today = new Date().getDay();
-      const todayName = translations['uk'].daysOfWeek[today]; // Ключі в schedule.js українською
+      const todayName = translations['uk'].daysOfWeek[today];
       const cachedSchedule = loadCachedSchedule();
       const daySchedule = cachedSchedule[todayName] || [];
       const currentLessonData = getCurrentLesson(daySchedule);
@@ -689,7 +689,7 @@
     function renderWeeklySchedule() {
       const lang = translations[currentLanguage];
       const today = new Date().getDay();
-      const todayName = translations['uk'].daysOfWeek[today]; // Ключі в schedule.js українською
+      const todayName = translations['uk'].daysOfWeek[today];
       const cachedSchedule = loadCachedSchedule();
       const weeklyScheduleTable = document.querySelector("#weekly-schedule");
       weeklyScheduleTable.innerHTML = '';
@@ -732,7 +732,7 @@
       lang.filterDays.forEach((day, index) => {
         const button = document.createElement("button");
         button.textContent = day;
-        button.dataset.day = translations['uk'].filterDays[index]; // Українські назви для ключів
+        button.dataset.day = translations['uk'].filterDays[index];
         if (index + 1 === today) button.classList.add("active");
         button.addEventListener("click", () => {
           document.querySelectorAll(".day-filter button").forEach(btn => btn.classList.remove("active"));
