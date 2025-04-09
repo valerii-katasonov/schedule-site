@@ -15,15 +15,16 @@
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         min-height: 100vh;
         transition: background 0.5s ease;
+        position: relative; /* Додано для позиціонування центрального логотипу */
     }
 
     body.dark-theme {
-        background: linear-gradient(135deg, #002b33 0%, #004d57 100%); /* Оновлений фон для темного режиму */
+        background: linear-gradient(135deg, #002b33 0%, #004d57 100%);
         color: #fff;
     }
 
     header {
-        background: linear-gradient(45deg, #00bfd1, #006d77); /* Світла тема */
+        background: linear-gradient(45deg, #00bfd1, #006d77);
         color: white;
         padding: 1.5em 0;
         display: flex;
@@ -35,15 +36,16 @@
     }
 
     body.dark-theme header {
-        background: linear-gradient(45deg, #003d44, #006d77); /* Темна тема */
+        background: linear-gradient(45deg, #003d44, #006d77);
     }
 
     header img {
         width: 100px;
         height: 100px;
-        border-radius: 50px;
+        border-radius: 50%;
         border: 3px solid rgba(255,255,255,0.2);
-        animation: fadeIn 1s ease-in;
+        opacity: 0; /* Спочатку прихований */
+        animation: fadeInHeader 1s ease-in forwards 1.5s; /* З’являється після центрального логотипу */
     }
 
     header h1 {
@@ -66,6 +68,42 @@
 
     .theme-toggle { right: 60px; }
     .notify-toggle { right: 20px; }
+
+    /* Стилі для центрального логотипу */
+    .logo-intro {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 150px; /* Трохи більше для ефекту */
+        height: 150px;
+        border-radius: 50%;
+        border: 3px solid rgba(255,255,255,0.2);
+        animation: logoIntro 1.5s ease-in-out forwards;
+        z-index: 1000; /* Щоб був поверх усього */
+    }
+
+    /* Анімація для центрального логотипу */
+    @keyframes logoIntro {
+        0% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+        }
+        50% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+    }
+
+    /* Анімація для логотипу в header */
+    @keyframes fadeInHeader {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
 
     .container {
         max-width: 2000px;
@@ -174,11 +212,11 @@
         background: #555;
     }
 
-    .monday { background: rgba(173, 216, 230, 0.6); } /* Світло-голубий */
-    .tuesday { background: rgba(144, 238, 144, 0.6); } /* Світло-зелений */
-    .wednesday { background: rgba(255, 255, 224, 0.6); } /* Світло-жовтий */
-    .thursday { background: rgba(255, 218, 185, 0.6); } /* Світло-оранжевий */
-    .friday { background: rgba(255, 192, 203, 0.6); } /* Світло-рожевий */
+    .monday { background: rgba(173, 216, 230, 0.6); }
+    .tuesday { background: rgba(144, 238, 144, 0.6); }
+    .wednesday { background: rgba(255, 255, 224, 0.6); }
+    .thursday { background: rgba(255, 218, 185, 0.6); }
+    .friday { background: rgba(255, 192, 203, 0.6); }
     .current-day { background: rgba(76, 175, 80, 0.3); }
 
     .tables-container {
@@ -319,6 +357,9 @@
   </style>
 </head>
 <body>
+  <!-- Центральний логотип із анімацією -->
+  <img src="https://i.postimg.cc/WbY9TdDp/PushIco.png" alt="Push School Logo Intro" class="logo-intro">
+
   <header>
     <img src="https://i.postimg.cc/WbY9TdDp/PushIco.png" alt="Push School Logo">
     <h1>Розклад уроків<br>1 клас<br>Push School Warsaw</h1>
