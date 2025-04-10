@@ -47,3 +47,10 @@ const schedule = {
     { number: 4, subject: { ua: "Пластика", pl: "Plastyka" }, time: "11:55 - 12:40" },
   ]
 };
+
+// Експортуємо schedule для використання в інших файлах
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = schedule; // Для Node.js
+} else {
+  window.schedule = schedule; // Для браузера
+}
