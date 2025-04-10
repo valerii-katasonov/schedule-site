@@ -81,15 +81,35 @@
 
     .lang-toggle {
       background: none;
-      border: none;
+      border: 1px solid white;
+      border-radius: 4px;
       color: white;
       font-size: 1rem;
       cursor: pointer;
       padding: 0.5rem;
+      transition: background 0.3s ease;
+    }
+
+    .lang-toggle:hover {
+      background: rgba(255,255,255,0.2);
     }
 
     .lang-toggle.active {
-      font-weight: bold;
+      background: white;
+      color: #006d77;
+    }
+
+    @media screen and (max-width: 480px) {
+      .lang-switcher {
+        flex-direction: column;
+        top: 0.5rem;
+        left: 0.5rem;
+      }
+
+      .lang-toggle {
+        padding: 0.4rem;
+        font-size: 0.9rem;
+      }
     }
 
     .logo-intro {
@@ -205,7 +225,7 @@
     th, td {
       padding: 0.8rem 1rem;
       text-align: center;
-      border-bottom: 1px solid rgba(0,0,0,0itioner);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
       font-size: 1rem;
     }
 
@@ -486,7 +506,7 @@
     const translations = {
       header: {
         ua: 'Розклад уроків<br>1 клас<br>Push School Warsaw',
-        pl: 'Plan lekcji<br>1 klasa<br>Szkoła Push w Warszawie'
+        pl: 'Plan lekcji<br>1 klasa<br>Push School Warsaw'
       },
       usefulLinks: { ua: 'Корисні посилання:', pl: 'Przydatne linki:' },
       textbooks: { ua: 'Підручники:', pl: 'Podręczniki:' },
