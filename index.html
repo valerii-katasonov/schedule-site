@@ -71,6 +71,27 @@
     .theme-toggle { right: 3.5rem; }
     .notify-toggle { right: 1rem; }
 
+    .lang-switcher {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .lang-toggle {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .lang-toggle.active {
+      font-weight: bold;
+    }
+
     .logo-intro {
       position: fixed;
       top: 50%;
@@ -184,7 +205,7 @@
     th, td {
       padding: 0.8rem 1rem;
       text-align: center;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
+      border-bottom: 1px solid rgba(0,0,0,0itioner);
       font-size: 1rem;
     }
 
@@ -398,19 +419,23 @@
   <img src="https://i.postimg.cc/WbY9TdDp/PushIco.png" alt="Push School Logo Intro" class="logo-intro">
 
   <header>
+    <div class="lang-switcher">
+      <button class="lang-toggle" data-lang="ua">UA</button>
+      <button class="lang-toggle" data-lang="pl">PL</button>
+    </div>
     <img src="https://i.postimg.cc/WbY9TdDp/PushIco.png" alt="Push School Logo">
-    <h1>Розклад уроків<br>1 клас<br>Push School Warsaw</h1>
+    <h1 id="header">Розклад уроків<br>1 клас<br>Push School Warsaw</h1>
     <button class="theme-toggle" aria-label="Переключити тему"><i class="fas fa-moon"></i></button>
     <button class="notify-toggle" aria-label="Увімкнути сповіщення"><i class="fas fa-bell"></i></button>
   </header>
   <div class="container">
     <div class="links-container">
-      <h3>Корисні посилання:</h3>
+      <h3 id="useful-links">Корисні посилання:</h3>
       <ul>
         <li><a href="https://prosvita.net/" target="_blank"><i class="fas fa-link"></i> Просвіта</a></li>
         <li><a href="https://pushschoolwarsaw.edupage.org/" target="_blank"><i class="fas fa-link"></i> Сайт школи</a></li>
       </ul>
-      <h3>Підручники:</h3>
+      <h3 id="textbooks">Підручники:</h3>
       <ul>
         <li><a href="https://online.flipbuilder.com/sdtta/acov/" target="_blank"><i class="fas fa-book"></i> Academy Stars 1: Pupil's book</a></li>
         <li><a href="https://online.flipbuilder.com/sdtta/mxjn/" target="_blank"><i class="fas fa-book"></i> Academy Stars 1: Workbook</a></li>
@@ -422,29 +447,29 @@
     </div>
     <div class="tables-container">
       <div class="current-lesson" id="current-lesson" role="alert">Зараз немає уроків.</div>
-      <h2>Розклад на сьогодні</h2>
+      <h2 id="schedule-today">Розклад на сьогодні</h2>
       <div class="day-filter" id="day-filter"></div>
       <div class="table-wrapper">
         <table id="daily-schedule" role="grid">
           <thead>
             <tr>
-              <th>№</th>
-              <th>Урок</th>
-              <th>Час</th>
+              <th id="th-number">№</th>
+              <th id="th-subject">Урок</th>
+              <th id="th-time">Час</th>
             </tr>
           </thead>
           <tbody></tbody>
         </table>
       </div>
-      <h2>Розклад на тиждень</h2>
+      <h2 id="schedule-week">Розклад на тиждень</h2>
       <div class="table-wrapper">
         <table role="grid">
           <thead>
             <tr>
-              <th>День</th>
-              <th>№</th>
-              <th>Урок</th>
-              <th>Час</th>
+              <th id="th-day">День</th>
+              <th id="th-number-week">№</th>
+              <th id="th-subject-week">Урок</th>
+              <th id="th-time-week">Час</th>
             </tr>
           </thead>
           <tbody id="weekly-schedule"></tbody>
@@ -458,6 +483,29 @@
 
   <script src="/schedule.js"></script>
   <script>
+    const translations = {
+      header: {
+        ua: 'Розклад уроків<br>1 клас<br>Push School Warsaw',
+        pl: 'Plan lekcji<br>1 klasa<br>Szkoła Push w Warszawie'
+      },
+      usefulLinks: { ua: 'Корисні посилання:', pl: 'Przydatne linki:' },
+      textbooks: { ua: 'Підручники:', pl: 'Podręczniki:' },
+      scheduleToday: { ua: 'Розклад на сьогодні', pl: 'Plan na dziś' },
+      scheduleWeek: { ua: 'Розклад на тиждень', pl: 'Plan na tydzień' },
+      noLessons: { ua: 'Зараз немає уроків.', pl: 'Obecnie nie ma lekcji.' },
+      currentLesson: { ua: 'Зараз урок: ', pl: 'Obecnie lekcja: ' },
+      currentBreak: { ua: 'Зараз: ', pl: 'Obecnie: ' },
+      lessonsFinished: { ua: 'Заняття закінчилися.', pl: 'Zajęcia się zakończyły.' },
+      thDay: { ua: 'День', pl: 'Dzień' },
+      thNumber: { ua: '№', pl: 'Nr' },
+      thSubject: { ua: 'Урок', pl: 'Lekcja' },
+      thTime: { ua: 'Час', pl: 'Czas' }
+    };
+
+    let currentLanguage = 'ua';
+    const dayKeys = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    let selectedDay = dayKeys[new Date().getDay()];
+
     function cacheSchedule() {
       localStorage.setItem('schedule', JSON.stringify(schedule));
     }
@@ -480,7 +528,7 @@
         });
 
         if (currentTime >= start && currentTime < end) {
-          if (lesson.subject === "Перерва" || lesson.subject.includes("Обід")) {
+          if (lesson.subject.ua === "Перерва" || lesson.subject.ua.includes("Обід")) {
             return { type: "break", lesson };
           }
           return { type: "lesson", lesson };
@@ -500,28 +548,42 @@
       return null;
     }
 
+    function updateStaticTexts() {
+      document.getElementById('header').innerHTML = translations.header[currentLanguage];
+      document.getElementById('useful-links').textContent = translations.usefulLinks[currentLanguage];
+      document.getElementById('textbooks').textContent = translations.textbooks[currentLanguage];
+      document.getElementById('schedule-today').textContent = translations.scheduleToday[currentLanguage];
+      document.getElementById('schedule-week').textContent = translations.scheduleWeek[currentLanguage];
+      document.getElementById('th-day').textContent = translations.thDay[currentLanguage];
+      document.getElementById('th-number').textContent = translations.thNumber[currentLanguage];
+      document.getElementById('th-number-week').textContent = translations.thNumber[currentLanguage];
+      document.getElementById('th-subject').textContent = translations.thSubject[currentLanguage];
+      document.getElementById('th-subject-week').textContent = translations.thSubject[currentLanguage];
+      document.getElementById('th-time').textContent = translations.thTime[currentLanguage];
+      document.getElementById('th-time-week').textContent = translations.thTime[currentLanguage];
+    }
+
     function renderCurrentLesson() {
-      const daysOfWeek = ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"];
       const today = new Date().getDay();
-      const todayName = daysOfWeek[today];
+      const todayKey = dayKeys[today];
       const cachedSchedule = loadCachedSchedule();
-      const daySchedule = cachedSchedule[todayName] || [];
+      const daySchedule = cachedSchedule[todayKey] || [];
       const currentLessonData = getCurrentLesson(daySchedule);
       const currentLessonDiv = document.getElementById("current-lesson");
 
       if (currentLessonData) {
         if (currentLessonData.type === "lesson") {
           const lesson = currentLessonData.lesson;
-          currentLessonDiv.textContent = `Зараз урок: ${lesson.subject} (${lesson.time})`;
+          currentLessonDiv.textContent = `${translations.currentLesson[currentLanguage]} ${lesson.subject[currentLanguage]} (${lesson.time})`;
           if (notificationsEnabled) notifyLesson(lesson);
         } else if (currentLessonData.type === "break") {
           const lesson = currentLessonData.lesson;
-          currentLessonDiv.textContent = `Зараз: ${lesson.subject} (${lesson.time})`;
+          currentLessonDiv.textContent = `${translations.currentBreak[currentLanguage]} ${lesson.subject[currentLanguage]} (${lesson.time})`;
         } else if (currentLessonData.type === "finished") {
-          currentLessonDiv.textContent = "Заняття закінчилися.";
+          currentLessonDiv.textContent = translations.lessonsFinished[currentLanguage];
         }
       } else {
-        currentLessonDiv.textContent = "Зараз немає уроків.";
+        currentLessonDiv.textContent = translations.noLessons[currentLanguage];
       }
     }
 
@@ -532,10 +594,10 @@
       dailyScheduleTable.innerHTML = '';
 
       daySchedule.forEach(lesson => {
-        const isBreak = lesson.subject === "Перерва" || lesson.subject.includes("Обід");
+        const isBreak = lesson.subject.ua === "Перерва" || lesson.subject.ua.includes("Обід");
         const row = `<tr class="${isBreak ? 'highlight' : ''}">
           <td>${lesson.number}</td>
-          <td>${lesson.subject}</td>
+          <td>${lesson.subject[currentLanguage]}</td>
           <td>${lesson.time}</td>
         </tr>`;
         dailyScheduleTable.innerHTML += row;
@@ -543,34 +605,33 @@
     }
 
     function renderWeeklySchedule() {
-      const daysOfWeek = ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"];
-      const today = new Date().getDay();
-      const todayName = daysOfWeek[today];
       const cachedSchedule = loadCachedSchedule();
       const weeklyScheduleTable = document.querySelector("#weekly-schedule");
       weeklyScheduleTable.innerHTML = '';
+      const today = new Date().getDay();
+      const todayKey = dayKeys[today];
 
       const dayClasses = {
-        "Понеділок": "monday",
-        "Вівторок": "tuesday",
-        "Середа": "wednesday",
-        "Четвер": "thursday",
-        "П'ятниця": "friday",
+        "Monday": "monday",
+        "Tuesday": "tuesday",
+        "Wednesday": "wednesday",
+        "Thursday": "thursday",
+        "Friday": "friday",
       };
 
       for (const day in cachedSchedule) {
         const dayLessons = cachedSchedule[day];
         const dayClass = dayClasses[day] || "";
-        const isToday = day === todayName ? "current-day" : "";
+        const isToday = day === todayKey ? "current-day" : "";
+        const dayName = dayNames[day][currentLanguage];
 
         dayLessons.forEach((lesson, index) => {
-          const isBreak = lesson.subject === "Перерва" || lesson.subject.includes("Обід");
+          const isBreak = lesson.subject.ua === "Перерва" || lesson.subject.ua.includes("Обід");
           const rowClass = isBreak ? "highlight" : `${dayClass} ${isToday}`;
-
           const row = `<tr class="${rowClass}">
-            ${index === 0 ? `<td rowspan="${dayLessons.length}">${day}</td>` : ''}
+            ${index === 0 ? `<td rowspan="${dayLessons.length}">${dayName}</td>` : ''}
             <td>${lesson.number}</td>
-            <td>${lesson.subject}</td>
+            <td>${lesson.subject[currentLanguage]}</td>
             <td>${lesson.time}</td>
           </tr>`;
           weeklyScheduleTable.innerHTML += row;
@@ -579,17 +640,17 @@
     }
 
     function renderDayFilter() {
-      const daysOfWeek = ["Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця"];
-      const today = new Date().getDay();
+      const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
       const filterContainer = document.getElementById("day-filter");
       filterContainer.innerHTML = '';
 
-      daysOfWeek.forEach((day, index) => {
+      daysOfWeek.forEach((day) => {
         const button = document.createElement("button");
-        button.textContent = day;
+        button.textContent = dayNames[day][currentLanguage];
         button.dataset.day = day;
-        if (index + 1 === today) button.classList.add("active");
+        if (day === selectedDay) button.classList.add("active");
         button.addEventListener("click", () => {
+          selectedDay = day;
           document.querySelectorAll(".day-filter button").forEach(btn => btn.classList.remove("active"));
           button.classList.add("active");
           renderDailySchedule(day);
@@ -616,8 +677,8 @@
 
     function notifyLesson(lesson) {
       if (notificationsEnabled && Notification.permission === "granted") {
-        new Notification("Поточний урок", {
-          body: `${lesson.subject} (${lesson.time})`,
+        new Notification(translations.currentLesson[currentLanguage], {
+          body: `${lesson.subject[currentLanguage]} (${lesson.time})`,
           icon: "https://cdn-icons-png.flaticon.com/512/4751/4751951.png"
         });
       }
@@ -662,14 +723,18 @@
       });
     }
 
-    const daysOfWeek = ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"];
-    const today = new Date().getDay();
-    renderDailySchedule(daysOfWeek[today]);
-    renderWeeklySchedule();
-    renderDayFilter();
-    renderCurrentLesson();
-    setInterval(renderCurrentLesson, 30000);
-    cacheSchedule();
+    document.querySelectorAll('.lang-toggle').forEach(button => {
+      button.addEventListener('click', () => {
+        currentLanguage = button.dataset.lang;
+        document.querySelectorAll('.lang-toggle').forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        updateStaticTexts();
+        renderDayFilter();
+        renderDailySchedule(selectedDay);
+        renderWeeklySchedule();
+        renderCurrentLesson();
+      });
+    });
 
     document.querySelector('.theme-toggle').addEventListener('click', () => {
       document.body.classList.toggle('dark-theme');
@@ -689,6 +754,19 @@
 
     const image = document.querySelector('.google-image');
     handleTouchZoom(image);
+
+    // Початкове налаштування
+    document.querySelector('.lang-toggle[data-lang="ua"]').classList.add('active');
+    const today = new Date().getDay();
+    selectedDay = dayKeys[today];
+    if (!schedule[selectedDay]) selectedDay = "Monday"; // Якщо сьогодні не навчальний день, показуємо понеділок
+    updateStaticTexts();
+    renderDayFilter();
+    renderDailySchedule(selectedDay);
+    renderWeeklySchedule();
+    renderCurrentLesson();
+    setInterval(renderCurrentLesson, 30000);
+    cacheSchedule();
   </script>
 </body>
 </html>
