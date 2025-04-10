@@ -753,6 +753,14 @@
         renderDailySchedule(selectedDay);
         renderWeeklySchedule();
         renderCurrentLesson();
+
+        // Змінюємо зображення залежно від вибраної мови
+        const image = document.querySelector('.google-image');
+        if (currentLanguage === 'pl') {
+          image.src = 'https://i.postimg.cc/gcZFYcfn/PL.png'; // Польська версія
+        } else {
+          image.src = 'https://i.postimg.cc/W1RVp0n2/2.png'; // Українська версія
+        }
       });
     });
 
