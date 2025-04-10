@@ -12,128 +12,416 @@
       font-family: 'Montserrat', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
-      transition: background-color 0.3s, color 0.3s;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      transition: background 0.5s ease;
+      position: relative;
+      font-size: 16px;
     }
-    .dark-theme {
-      background-color: #333;
-      color: #f4f4f4;
+
+    body.dark-theme {
+      background: linear-gradient(135deg, #002b33 0%, #004d57 100%);
+      color: #fff;
     }
+
     header {
-      text-align: center;
-      padding: 20px;
-      background-color: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      background: linear-gradient(45deg, #00bfd1, #006d77);
+      color: white;
+      padding: 1.5rem 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      position: relative;
     }
+
+    body.dark-theme header {
+      background: linear-gradient(45deg, #003d44, #006d77);
+    }
+
+    header img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,0.2);
+      opacity: 0;
+      animation: fadeInHeader 1s ease-in forwards 1.5s;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      margin: 0;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      animation: fadeIn 1s ease-in;
+    }
+
+    .theme-toggle, .notify-toggle {
+      position: absolute;
+      top: 1rem;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
     .language-toggle {
       position: absolute;
-      top: 20px;
-      right: 20px;
+      top: 1rem;
+      left: 1rem;
+      display: flex;
+      gap: 0.5rem;
     }
+
     .lang-btn {
-      padding: 5px 10px;
-      margin: 0 5px;
+      background: rgba(255, 255, 255, 0.2);
       border: none;
-      background-color: #ddd;
+      color: white;
+      padding: 0.5rem 1rem;
       cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.3s ease;
     }
-    .lang-btn.active {
-      background-color: #4CAF50;
+
+    .lang-btn:hover, .lang-btn.active {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .theme-toggle { right: 3.5rem; }
+    .notify-toggle { right: 1rem; }
+
+    .container {
+      max-width: 2000px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      animation: fadeInUp 0.8s ease-in;
+    }
+
+    .current-lesson {
+      font-size: 1.2rem;
+      color: #1a1a66;
+      background: white;
+      border-left: 6px solid #4CAF50;
+      padding: 1rem;
+      margin: 0 0 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    body.dark-theme .current-lesson {
+      background: #333;
+      color: #fff;
+    }
+
+    .current-lesson:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    .day-filter {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .day-filter button {
+      padding: 0.8rem 1rem;
+      border: none;
+      background: #f8f9fa;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      min-width: 44px;
+      min-height: 44px;
+      font-size: 1rem;
+    }
+
+    .day-filter button.active {
+      background: #4CAF50;
       color: white;
     }
-    .container {
-      display: flex;
-      justify-content: space-between;
-      max-width: 1200px;
-      margin: 20px auto;
-      padding: 0 20px;
+
+    body.dark-theme .day-filter button {
+      background: #555;
+      color: #fff;
     }
-    .tables-container {
-      flex: 2;
+
+    body.dark-theme .day-filter button.active {
+      background: #66BB6A;
     }
-    .links-container {
-      flex: 1;
-      padding-right: 20px;
+
+    .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
-    .image-container-right {
-      flex: 1;
-      text-align: center;
-    }
+
     table {
       width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-      background-color: #fff;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin-bottom: 1.5rem;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
     }
+
+    body.dark-theme table {
+      background: #444;
+      color: #fff;
+    }
+
     th, td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: left;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-    .highlight {
-      background-color: #e0f7fa;
-    }
-    .current-lesson {
-      background-color: #ffeb3b;
-      padding: 10px;
-      margin-bottom: 20px;
+      padding: 0.8rem 1rem;
       text-align: center;
-      font-weight: bold;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      font-size: 1rem;
     }
-    .day-filter {
-      margin-bottom: 10px;
+
+    body.dark-theme th, body.dark-theme td {
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-    .day-filter button {
-      padding: 5px 10px;
-      margin-right: 5px;
-      border: none;
-      background-color: #ddd;
+
+    th {
+      background: #f8f9fa;
+      font-weight: 600;
+      color: #333;
+    }
+
+    body.dark-theme th {
+      background: #555;
+    }
+
+    .highlight {
+      background: #f5f5f5;
+      font-style: italic;
+    }
+
+    body.dark-theme .highlight {
+      background: #555;
+    }
+
+    .monday { background: rgba(173, 216, 230, 0.6); }
+    .tuesday { background: rgba(144, 238, 144, 0.6); }
+    .wednesday { background: rgba(255, 255, 224, 0.6); }
+    .thursday { background: rgba(255, 218, 185, 0.6); }
+    .friday { background: rgba(255, 192, 203, 0.6); }
+    .current-day { background: rgba(76, 175, 80, 0.3); }
+
+    .tables-container {
+      padding: 1.5rem;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      margin: 0;
+    }
+
+    body.dark-theme .tables-container {
+      background: #333;
+    }
+
+    .links-container {
+      padding: 1.5rem;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      max-width: 350px;
+      transition: transform 0.3s ease;
+    }
+
+    body.dark-theme .links-container {
+      background: #333;
+    }
+
+    .links-container:hover {
+      transform: translateY(-5px);
+    }
+
+    .links-container h3 {
+      color: #1a1a66;
+      margin: 0 0 1rem;
+      font-size: 1.2rem;
+    }
+
+    body.dark-theme .links-container h3 {
+      color: #fff;
+    }
+
+    .links-container a {
+      color: #2d2d99;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 0;
+      font-size: 1rem;
+    }
+
+    body.dark-theme .links-container a {
+      color: #4CAF50;
+    }
+
+    .links-container a:hover {
+      color: #4CAF50;
+    }
+
+    body.dark-theme .links-container a:hover {
+      color: #66BB6A;
+    }
+
+    .image-container-right {
+      padding: 1.5rem;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      max-width: 450px;
+      transition: transform 0.3s ease;
+    }
+
+    body.dark-theme .image-container-right {
+      background: #333;
+    }
+
+    .image-container-right:hover {
+      transform: translateY(-5px);
+    }
+
+    .google-image {
+      width: 100%;
+      border-radius: 10px;
       cursor: pointer;
+      transition: transform 0.3s ease;
+      touch-action: pinch-zoom;
     }
-    .day-filter button.active {
-      background-color: #4CAF50;
-      color: white;
+
+    h2 {
+      color: #1a1a66;
+      font-size: 1.5rem;
+      margin: 0 0 1.5rem;
+      text-align: center;
     }
-    .theme-toggle, .notify-toggle {
-      margin-left: 10px;
-      padding: 5px 10px;
-      border: none;
-      background-color: #ddd;
-      cursor: pointer;
+
+    body.dark-theme h2 {
+      color: #fff;
     }
-    .dark-theme table {
-      background-color: #444;
-      color: #f4f4f4;
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
-    .dark-theme th {
-      background-color: #555;
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .dark-theme header {
-      background-color: #444;
+
+    @media screen and (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        padding: 0 0.5rem;
+      }
+
+      .links-container, .image-container-right {
+        max-width: 100%;
+        margin: 0 0 1.5rem;
+      }
+
+      .tables-container {
+        width: 100%;
+      }
+
+      header {
+        padding: 1rem 0;
+      }
+
+      header img {
+        width: 80px;
+        height: 80px;
+      }
+
+      header h1 {
+        font-size: 1.5rem;
+      }
+
+      .day-filter {
+        flex-wrap: wrap;
+      }
+
+      .current-lesson {
+        font-size: 1.1rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      header h1 {
+        font-size: 1.2rem;
+      }
+
+      header img {
+        width: 60px;
+        height: 60px;
+      }
+
+      .theme-toggle, .notify-toggle {
+        font-size: 1.2rem;
+        top: 0.8rem;
+      }
+
+      .language-toggle {
+        top: 0.8rem;
+        left: 0.8rem;
+      }
+
+      .lang-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      .day-filter button {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      th, td {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      .links-container a {
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 <body>
+  <img src="https://i.postimg.cc/WbY9TdDp/PushIco.png" alt="Push School Logo Intro" class="logo-intro">
+
   <header>
     <div class="language-toggle">
       <button class="lang-btn" data-lang="ua">UA</button>
       <button class="lang-btn" data-lang="pl">PL</button>
     </div>
     <img src="https://i.postimg.cc/WbY9TdDp/PushIco.png" alt="Push School Logo">
-    <h1>Розклад уроків<br>1 клас<br>Push School Warsaw</h1>
+    <h1 data-key="header">Розклад уроків<br>1 клас<br>Push School Warsaw</h1>
     <button class="theme-toggle" aria-label="Переключити тему"><i class="fas fa-moon"></i></button>
     <button class="notify-toggle" aria-label="Увімкнути сповіщення"><i class="fas fa-bell"></i></button>
   </header>
   <div class="container">
     <div class="links-container">
-      <h3>Корисні посилання:</h3>
+      <h3 data-key="usefulLinks">Корисні посилання:</h3>
       <ul>
         <li><a href="https://prosvita.net/" target="_blank"><i class="fas fa-link"></i> Просвіта</a></li>
       </ul>
-      <h3>Підручники:</h3>
+      <h3 data-key="textbooks">Підручники:</h3>
       <ul>
         <li><a href="https://online.flipbuilder.com/sdtta/acov/" target="_blank"><i class="fas fa-book"></i> Academy Stars 1: Pupil's book</a></li>
         <li><a href="https://online.flipbuilder.com/sdtta/mxjn/" target="_blank"><i class="fas fa-book"></i> Academy Stars 1: Workbook</a></li>
@@ -144,30 +432,30 @@
       </ul>
     </div>
     <div class="tables-container">
-      <div class="current-lesson" id="current-lesson" role="alert">Зараз немає уроків.</div>
-      <h2>Розклад на сьогодні</h2>
+      <div class="current-lesson" id="current-lesson" role="alert" data-key="noLesson">Зараз немає уроків.</div>
+      <h2 data-key="scheduleToday">Розклад на сьогодні</h2>
       <div class="day-filter" id="day-filter"></div>
       <div class="table-wrapper">
         <table id="daily-schedule" role="grid">
           <thead>
             <tr>
-              <th>№</th>
-              <th>Урок</th>
-              <th>Час</th>
+              <th data-key="number">№</th>
+              <th data-key="subject">Урок</th>
+              <th data-key="time">Час</th>
             </tr>
           </thead>
           <tbody></tbody>
         </table>
       </div>
-      <h2>Розклад на тиждень</h2>
+      <h2 data-key="scheduleWeek">Розклад на тиждень</h2>
       <div class="table-wrapper">
         <table role="grid">
           <thead>
             <tr>
-              <th>День</th>
-              <th>№</th>
-              <th>Урок</th>
-              <th>Час</th>
+              <th data-key="day">День</th>
+              <th data-key="number">№</th>
+              <th data-key="subject">Урок</th>
+              <th data-key="time">Час</th>
             </tr>
           </thead>
           <tbody id="weekly-schedule"></tbody>
@@ -181,233 +469,65 @@
 
   <script src="/schedule.js"></script>
   <script>
-    const daysOfWeekUA = ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"];
-    const daysTranslations = {
-      ua: ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"],
-      pl: ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"]
-    };
-    const lessonTexts = {
+    const translations = {
       ua: {
+        header: "Розклад уроків<br>1 клас<br>Push School Warsaw",
+        usefulLinks: "Корисні посилання:",
+        textbooks: "Підручники:",
         noLesson: "Зараз немає уроків.",
-        currentLesson: "Зараз урок: {subject} ({time})",
-        currentBreak: "Зараз: {subject} ({time})",
-        lessonsFinished: "Заняття закінчилися."
+        scheduleToday: "Розклад на сьогодні",
+        scheduleWeek: "Розклад на тиждень",
+        number: "№",
+        subject: "Урок",
+        time: "Час",
+        day: "День"
       },
       pl: {
+        header: "Plan lekcji<br>klasa 1<br>Push School Warsaw",
+        usefulLinks: "Przydatne linki:",
+        textbooks: "Podręczniki:",
         noLesson: "Obecnie nie ma lekcji.",
-        currentLesson: "Obecnie lekcja: {subject} ({time})",
-        currentBreak: "Obecnie: {subject} ({time})",
-        lessonsFinished: "Zajęcia się zakończyły."
+        scheduleToday: "Plan na dziś",
+        scheduleWeek: "Plan na tydzień",
+        number: "Nr",
+        subject: "Lekcja",
+        time: "Czas",
+        day: "Dzień"
       }
     };
 
     let currentLang = localStorage.getItem('language') || 'ua';
-    let notificationsEnabled = false;
 
     function setLanguage(lang) {
       currentLang = lang;
       localStorage.setItem('language', lang);
-      renderDayFilter();
-      renderDailySchedule(daysOfWeekUA[new Date().getDay()]);
-      renderWeeklySchedule();
-      renderCurrentLesson();
-
+      updateText();
       document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.lang === lang);
       });
     }
 
-    function getSubjectName(subject) {
-      return subject[currentLang] || subject.ua;
-    }
-
-    function cacheSchedule() {
-      localStorage.setItem('schedule', JSON.stringify(schedule));
-    }
-
-    function loadCachedSchedule() {
-      const cached = localStorage.getItem('schedule');
-      return cached ? JSON.parse(cached) : schedule;
-    }
-
-    function getCurrentLesson(daySchedule) {
-      const now = new Date();
-      const currentHour = now.getHours();
-      const currentMinutes = now.getMinutes();
-      const currentTime = currentHour * 60 + currentMinutes;
-
-      for (let lesson of daySchedule) {
-        const [start, end] = lesson.time.split(" - ").map(time => {
-          const [hours, minutes] = time.split(":").map(Number);
-          return hours * 60 + minutes;
-        });
-
-        if (currentTime >= start && currentTime < end) {
-          const subjectName = getSubjectName(lesson.subject);
-          if (lesson.subject.ua === "Перерва" || lesson.subject.ua.includes("Обід")) {
-            return { type: "break", lesson, subjectName };
-          }
-          return { type: "lesson", lesson, subjectName };
-        }
-      }
-
-      if (daySchedule.length > 0) {
-        const lastLessonEnd = daySchedule[daySchedule.length - 1].time.split(" - ")[1];
-        const [hours, minutes] = lastLessonEnd.split(":").map(Number);
-        const lastLessonEndTime = hours * 60 + minutes;
-
-        if (currentTime >= lastLessonEndTime) {
-          return { type: "finished" };
-        }
-      }
-
-      return null;
-    }
-
-    function renderCurrentLesson() {
-      const today = new Date().getDay();
-      const todayName = daysOfWeekUA[today];
-      const cachedSchedule = loadCachedSchedule();
-      const daySchedule = cachedSchedule[todayName] || [];
-      const currentLessonData = getCurrentLesson(daySchedule);
-      const currentLessonDiv = document.getElementById("current-lesson");
-
-      if (currentLessonData) {
-        if (currentLessonData.type === "lesson") {
-          const { subjectName, lesson } = currentLessonData;
-          currentLessonDiv.textContent = lessonTexts[currentLang].currentLesson
-            .replace('{subject}', subjectName)
-            .replace('{time}', lesson.time);
-          if (notificationsEnabled) notifyLesson(lesson, subjectName);
-        } else if (currentLessonData.type === "break") {
-          const { subjectName, lesson } = currentLessonData;
-          currentLessonDiv.textContent = lessonTexts[currentLang].currentBreak
-            .replace('{subject}', subjectName)
-            .replace('{time}', lesson.time);
-        } else if (currentLessonData.type === "finished") {
-          currentLessonDiv.textContent = lessonTexts[currentLang].lessonsFinished;
-        }
-      } else {
-        currentLessonDiv.textContent = lessonTexts[currentLang].noLesson;
-      }
-    }
-
-    function renderDailySchedule(selectedDay) {
-      const cachedSchedule = loadCachedSchedule();
-      const daySchedule = cachedSchedule[selectedDay] || [];
-      const dailyScheduleTable = document.querySelector("#daily-schedule tbody");
-      dailyScheduleTable.innerHTML = '';
-
-      daySchedule.forEach(lesson => {
-        const isBreak = lesson.subject.ua === "Перерва" || lesson.subject.ua.includes("Обід");
-        const subjectName = getSubjectName(lesson.subject);
-        const row = `<tr class="${isBreak ? 'highlight' : ''}">
-          <td>${lesson.number}</td>
-          <td>${subjectName}</td>
-          <td>${lesson.time}</td>
-        </tr>`;
-        dailyScheduleTable.innerHTML += row;
-      });
-    }
-
-    function renderWeeklySchedule() {
-      const cachedSchedule = loadCachedSchedule();
-      const weeklyScheduleTable = document.querySelector("#weekly-schedule");
-      weeklyScheduleTable.innerHTML = '';
-
-      for (const day in cachedSchedule) {
-        const translatedDay = daysTranslations[currentLang][daysOfWeekUA.indexOf(day)];
-        const dayLessons = cachedSchedule[day];
-        const isToday = day === daysOfWeekUA[new Date().getDay()] ? "current-day" : "";
-
-        dayLessons.forEach((lesson, index) => {
-          const isBreak = lesson.subject.ua === "Перерва" || lesson.subject.ua.includes("Обід");
-          const subjectName = getSubjectName(lesson.subject);
-          const rowClass = isBreak ? "highlight" : isToday;
-
-          const row = `<tr class="${rowClass}">
-            ${index === 0 ? `<td rowspan="${dayLessons.length}">${translatedDay}</td>` : ''}
-            <td>${lesson.number}</td>
-            <td>${subjectName}</td>
-            <td>${lesson.time}</td>
-          </tr>`;
-          weeklyScheduleTable.innerHTML += row;
-        });
-      }
-    }
-
-    function renderDayFilter() {
-      const days = daysTranslations[currentLang].slice(1, 6); // Понеділок - П’ятниця
-      const today = new Date().getDay();
-      const filterContainer = document.getElementById("day-filter");
-      filterContainer.innerHTML = '';
-
-      days.forEach((day, index) => {
-        const button = document.createElement("button");
-        button.textContent = day;
-        button.dataset.day = daysOfWeekUA[index + 1];
-        if (index + 1 === today) button.classList.add("active");
-        button.addEventListener("click", () => {
-          document.querySelectorAll(".day-filter button").forEach(btn => btn.classList.remove("active"));
-          button.classList.add("active");
-          renderDailySchedule(button.dataset.day);
-        });
-        filterContainer.appendChild(button);
-      });
-    }
-
-    function requestNotificationPermission() {
-      if (!("Notification" in window)) {
-        alert("Ваш браузер не підтримує сповіщення.");
-        return;
-      }
-
-      Notification.requestPermission().then(permission => {
-        if (permission === "granted") {
-          notificationsEnabled = true;
-          document.querySelector('.notify-toggle i').classList.replace('fa-bell', 'fa-bell-slash');
+    function updateText() {
+      document.querySelectorAll('[data-key]').forEach(element => {
+        const key = element.getAttribute('data-key');
+        if (translations[currentLang][key]) {
+          element.innerHTML = translations[currentLang][key];
         }
       });
     }
-
-    function notifyLesson(lesson, subjectName) {
-      if (notificationsEnabled && Notification.permission === "granted") {
-        new Notification("Поточний урок", {
-          body: `${subjectName} (${lesson.time})`,
-          icon: "https://cdn-icons-png.flaticon.com/512/4751/4751951.png"
-        });
-      }
-    }
-
-    // Ініціалізація
-    setLanguage(currentLang);
-    const today = new Date().getDay();
-    renderDailySchedule(daysOfWeekUA[today]);
-    renderWeeklySchedule();
-    renderDayFilter();
-    renderCurrentLesson();
-    setInterval(renderCurrentLesson, 30000);
-    cacheSchedule();
 
     document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
     });
 
-    document.querySelector('.theme-toggle').addEventListener('click', () => {
+    const themeToggle = document.querySelector('.theme-toggle');
+    themeToggle.addEventListener('click', () => {
       document.body.classList.toggle('dark-theme');
-      const icon = document.querySelector('.theme-toggle i');
-      icon.classList.toggle('fa-moon');
-      icon.classList.toggle('fa-sun');
+      const isDark = document.body.classList.contains('dark-theme');
+      themeToggle.innerHTML = `<i class="fas ${isDark ? 'fa-sun' : 'fa-moon'}"></i>`;
     });
 
-    document.querySelector('.notify-toggle').addEventListener('click', () => {
-      if (!notificationsEnabled) {
-        requestNotificationPermission();
-      } else {
-        notificationsEnabled = false;
-        document.querySelector('.notify-toggle i').classList.replace('fa-bell-slash', 'fa-bell');
-      }
-    });
+    setLanguage(currentLang);
   </script>
 </body>
 </html>
