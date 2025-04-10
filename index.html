@@ -104,6 +104,16 @@
       background-color: #ddd;
       cursor: pointer;
     }
+    .dark-theme table {
+      background-color: #444;
+      color: #f4f4f4;
+    }
+    .dark-theme th {
+      background-color: #555;
+    }
+    .dark-theme header {
+      background-color: #444;
+    }
   </style>
 </head>
 <body>
@@ -171,16 +181,62 @@
     </div>
   </div>
 
-  <script src="/schedule.js"></script>
   <script>
-    // Список днів тижня українською для логіки
+    const schedule = {
+      "Понеділок": [
+        { number: 1, subject: { ua: "Навчання грамоти", pl: "Nauka pisania" }, time: "9:00 - 9:45" },
+        { number: " ", subject: { ua: "Перерва", pl: "Przerwa" }, time: "9:45 - 9:55" },
+        { number: 2, subject: { ua: "Навчання грамоти", pl: "Nauka pisania" }, time: "9:55 - 10:40" },
+        { number: " ", subject: { ua: "Перерва", pl: "Przerwa" }, time: "10:40 - 10:50" },
+        { number: 3, subject: { ua: "Математика", pl: "Matematyka" }, time: "10:50 - 11:35" },
+        { number: " ", subject: { ua: "Обід 1-4 класи", pl: "Obiad klasy 1-4" }, time: "11:35 - 11:55" },
+        { number: 4, subject: { ua: "Англійська мова", pl: "Język angielski" }, time: "11:55 - 12:40" },
+      ],
+      "Вівторок": [
+        { number: 1, subject: { ua: "Навчання грамоти", pl: "Nauka pisania" }, time: "9:00 - 9:45" },
+        { number: " ", subject: { ua: "Перерва", pl: "Przerwa" }, time: "9:45 - 9:55" },
+        { number: 2, subject: { ua: "Навчання грамоти", pl: "Nauka pisania" }, time: "9:55 - 10:40" },
+        { number: " ", subject: { ua: "Перерва", pl: "Przerwa" }, time: "10:40 - 10:50" },
+        { number: 3, subject: { ua: "Математика", pl: "Matematyka" }, time: "10:50 - 11:35" },
+        { number: " ", subject: { ua: "Обід 1-4 класи", pl: "Obiad klasy 1-4" }, time: "11:35 - 11:55" },
+        { number: 4, subject: { ua: "Природа", pl: "Przyroda" }, time: "11:55 - 12:40" },
+        { number: " ", subject: { ua: "Обід 5-6 класи", pl: "Obiad klasy 5-6" }, time: "12:40 - 13:00" },
+        { number: 5, subject: { ua: "Пластика", pl: "Plastyka" }, time: "13:00 - 13:45" },
+      ],
+      "Середа": [
+        { number: 1, subject: { ua: "Навчання грамоти", pl: "Nauka pisania" }, time: "9:00 - 9:45" },
+        { number: " ", subject: { ua: "Перерва", pl: "Przerwa" }, time: "9:45 - 9:55" },
+        { number: 2, subject: { ua: "Математика", pl: "Matematyka" }, time: "9:55 - 10:40" },
+        { number: " ", subject: { ua: "Перерва", pl: "Przerwa" }, time: "10:40 - 10:50" },
+        { number: 3, subject: { ua: "Англійська мова", pl: "Język angielski" }, time: "10:50 - 11:35" },
+        { number: " ", subject: { ua: "Обід 1-4 класи", pl: "Obiad klasy 1-4" }, time: "11:35 - 11:55" },
+        { number: 4, subject: { ua: "Фізична культура", pl: "Wychowanie fizyczne" }, time: "11:55 - 12:40" },
+      ],
+      "Четвер": [
+        { number: 1, subject: { ua: "Навчання грамоти", pl: "Nauka pisania" }, time: "9:00 - 9:45" },
+        { number: " ", subject: { ua: "Перерва", pl: "Przerwa" }, time: "9:45 - 9:55" },
+        { number: 2, subject: { ua: "Математика", pl: "Matematyka" }, time: "9:55 - 10:40" },
+        { number: " ", subject: { ua: "Перерва", pl: "Przerwa" }, time: "10:40 - 10:50" },
+        { number: 3, subject: { ua: "Природа", pl: "Przyroda" }, time: "10:50 - 11:35" },
+        { number: " ", subject: { ua: "Обід 1-4 класи", pl: "Obiad klasy 1-4" }, time: "11:35 - 11:55" },
+        { number: 4, subject: { ua: "Англійська мова", pl: "Język angielski" }, time: "11:55 - 12:40" },
+      ],
+      "П'ятниця": [
+        { number: 1, subject: { ua: "Навчання грамоти", pl: "Nauka pisania" }, time: "9:00 - 9:45" },
+        { number: " ", subject: { ua: "Перерва", pl: "Przerwa" }, time: "9:45 - 9:55" },
+        { number: 2, subject: { ua: "Математика", pl: "Matematyka" }, time: "9:55 - 10:40" },
+        { number: " ", subject: { ua: "Перерва", pl: "Przerwa" }, time: "10:40 - 10:50" },
+        { number: 3, subject: { ua: "Фізична культура", pl: "Wychowanie fizyczne" }, time: "10:50 - 11:35" },
+        { number: " ", subject: { ua: "Обід 1-4 класи", pl: "Obiad klasy 1-4" }, time: "11:35 - 11:55" },
+        { number: 4, subject: { ua: "Пластика", pl: "Plastyka" }, time: "11:55 - 12:40" },
+      ]
+    };
+
     const daysOfWeekUA = ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"];
-    // Переклади днів тижня для відображення
     const daysTranslations = {
       ua: ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"],
       pl: ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"]
     };
-    // Тексти для поточного уроку
     const lessonTexts = {
       ua: {
         noLesson: "Зараз немає уроків.",
@@ -197,6 +253,7 @@
     };
 
     let currentLang = localStorage.getItem('language') || 'ua';
+    let notificationsEnabled = false;
 
     function setLanguage(lang) {
       currentLang = lang;
@@ -212,7 +269,7 @@
     }
 
     function getSubjectName(subject) {
-      return subject[currentLang] || subject.ua; // За замовчуванням українська
+      return subject[currentLang] || subject.ua;
     }
 
     function cacheSchedule() {
@@ -339,7 +396,7 @@
       days.forEach((day, index) => {
         const button = document.createElement("button");
         button.textContent = day;
-        button.dataset.day = daysOfWeekUA[index + 1]; // Зберігаємо українську назву для фільтрації
+        button.dataset.day = daysOfWeekUA[index + 1];
         if (index + 1 === today) button.classList.add("active");
         button.addEventListener("click", () => {
           document.querySelectorAll(".day-filter button").forEach(btn => btn.classList.remove("active"));
@@ -349,8 +406,6 @@
         filterContainer.appendChild(button);
       });
     }
-
-    let notificationsEnabled = false;
 
     function requestNotificationPermission() {
       if (!("Notification" in window)) {
