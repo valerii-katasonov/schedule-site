@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title data-key="title">Розклад уроків</title>
+  <title>Розклад уроків</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -12,417 +12,97 @@
       font-family: 'Montserrat', sans-serif;
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-      min-height: 100vh;
-      transition: background 0.5s ease;
-      position: relative;
-      font-size: 16px;
+      background-color: #f4f4f4;
+      transition: background-color 0.3s, color 0.3s;
     }
-
-    body.dark-theme {
-      background: linear-gradient(135deg, #002b33 0%, #004d57 100%);
-      color: #fff;
+    .dark-theme {
+      background-color: #333;
+      color: #f4f4f4;
     }
-
     header {
-      background: linear-gradient(45deg, #00bfd1, #006d77);
-      color: white;
-      padding: 1.5rem 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-      position: relative;
+      text-align: center;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-
-    body.dark-theme header {
-      background: linear-gradient(45deg, #003d44, #006d77);
-    }
-
-    header img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      border: 3px solid rgba(255,255,255,0.2);
-      opacity: 0;
-      animation: fadeInHeader 1s ease-in forwards 1.5s;
-    }
-
-    header h1 {
-      font-size: 1.8rem;
-      margin: 0;
-      font-weight: 700;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-      animation: fadeIn 1s ease-in;
-    }
-
-    .theme-toggle, .notify-toggle {
-      position: absolute;
-      top: 1rem;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-      padding: 0.5rem;
-    }
-
     .language-toggle {
       position: absolute;
-      top: 1rem;
-      left: 1rem;
-      display: flex;
-      gap: 0.5rem;
+      top: 20px;
+      right: 20px;
     }
-
     .lang-btn {
-      background: rgba(255, 255, 255, 0.2);
+      padding: 5px 10px;
+      margin: 0 5px;
       border: none;
-      color: white;
-      padding: 0.5rem 1rem;
+      background-color: #ddd;
       cursor: pointer;
-      border-radius: 5px;
-      transition: background 0.3s ease;
     }
-
-    .lang-btn:hover, .lang-btn.active {
-      background: rgba(255, 255, 255, 0.4);
+    .lang-btn.active {
+      background-color: #4CAF50;
+      color: white;
     }
-
-    .theme-toggle { right: 3.5rem; }
-    .notify-toggle { right: 1rem; }
-
-    .logo-intro {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 3px solid rgba(255,255,255,0.2);
-      animation: logoIntro 1s ease-in-out forwards;
-      z-index: 1000;
-    }
-
-    @keyframes logoIntro {
-      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
-      50% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-      100% { opacity: 0; transform: translate(-50%, -50%) scale(1.1); }
-    }
-
-    @keyframes fadeInHeader {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
     .container {
-      max-width: 2000px;
-      margin: 2rem auto;
-      padding: 0 1rem;
       display: flex;
-      gap: 1.5rem;
-      justify-content: center;
-      animation: fadeInUp 0.8s ease-in;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
     }
-
-    .current-lesson {
-      font-size: 1.2rem;
-      color: #1a1a66;
-      background: white;
-      border-left: 6px solid #4CAF50;
-      padding: 1rem;
-      margin: 0 0 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    .tables-container {
+      flex: 2;
     }
-
-    body.dark-theme .current-lesson {
-      background: #333;
-      color: #fff;
+    .links-container {
+      flex: 1;
+      padding-right: 20px;
     }
-
-    .current-lesson:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    .image-container-right {
+      flex: 1;
+      text-align: center;
     }
-
-    .day-filter {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .day-filter button {
-      padding: 0.8rem 1rem;
-      border: none;
-      background: #f8f9fa;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      min-width: 44px;
-      min-height: 44px;
-      font-size: 1rem;
-    }
-
-    .day-filter button.active {
-      background: #4CAF50;
-      color: white;
-    }
-
-    body.dark-theme .day-filter button {
-      background: #555;
-      color: #fff;
-    }
-
-    body.dark-theme .day-filter button.active {
-      background: #66BB6A;
-    }
-
-    .table-wrapper {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
     table {
       width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-      margin-bottom: 1.5rem;
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      background-color: #fff;
     }
-
-    body.dark-theme table {
-      background: #444;
-      color: #fff;
-    }
-
     th, td {
-      padding: 0.8rem 1rem;
-      text-align: center;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-      font-size: 1rem;
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
     }
-
-    body.dark-theme th, body.dark-theme td {
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-
     th {
-      background: #f8f9fa;
-      font-weight: 600;
-      color: #333;
+      background-color: #f2f2f2;
     }
-
-    body.dark-theme th {
-      background: #555;
-    }
-
     .highlight {
-      background: #f5f5f5;
-      font-style: italic;
+      background-color: #e0f7fa;
     }
-
-    body.dark-theme .highlight {
-      background: #555;
-    }
-
-    .monday { background: rgba(173, 216, 230, 0.6); }
-    .tuesday { background: rgba(144, 238, 144, 0.6); }
-    .wednesday { background: rgba(255, 255, 224, 0.6); }
-    .thursday { background: rgba(255, 218, 185, 0.6); }
-    .friday { background: rgba(255, 192, 203, 0.6); }
-    .current-day { background: rgba(76, 175, 80, 0.3); }
-
-    .tables-container {
-      padding: 1.5rem;
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-      margin: 0;
-    }
-
-    body.dark-theme .tables-container {
-      background: #333;
-    }
-
-    .links-container {
-      padding: 1.5rem;
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-      max-width: 350px;
-      transition: transform 0.3s ease;
-    }
-
-    body.dark-theme .links-container {
-      background: #333;
-    }
-
-    .links-container:hover {
-      transform: translateY(-5px);
-    }
-
-    .links-container h3 {
-      color: #1a1a66;
-      margin: 0 0 1rem;
-      font-size: 1.2rem;
-    }
-
-    body.dark-theme .links-container h3 {
-      color: #fff;
-    }
-
-    .links-container a {
-      color: #2d2d99;
-      text-decoration: none;
-      transition: color 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.8rem 0;
-      font-size: 1rem;
-    }
-
-    body.dark-theme .links-container a {
-      color: #4CAF50;
-    }
-
-    .links-container a:hover {
-      color: #4CAF50;
-    }
-
-    body.dark-theme .links-container a:hover {
-      color: #66BB6A;
-    }
-
-    .image-container-right {
-      padding: 1.5rem;
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-      max-width: 450px;
-      transition: transform 0.3s ease;
-    }
-
-    body.dark-theme .image-container-right {
-      background: #333;
-    }
-
-    .image-container-right:hover {
-      transform: translateY(-5px);
-    }
-
-    .google-image {
-      width: 100%;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      touch-action: pinch-zoom;
-    }
-
-    h2 {
-      color: #1a1a66;
-      font-size: 1.5rem;
-      margin: 0 0 1.5rem;
+    .current-lesson {
+      background-color: #ffeb3b;
+      padding: 10px;
+      margin-bottom: 20px;
       text-align: center;
+      font-weight: bold;
     }
-
-    body.dark-theme h2 {
-      color: #fff;
+    .day-filter {
+      margin-bottom: 10px;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    .day-filter button {
+      padding: 5px 10px;
+      margin-right: 5px;
+      border: none;
+      background-color: #ddd;
+      cursor: pointer;
     }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .day-filter button.active {
+      background-color: #4CAF50;
+      color: white;
     }
-
-    @media screen and (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        padding: 0 0.5rem;
-      }
-
-      .links-container, .image-container-right {
-        max-width: 100%;
-        margin: 0 0 1.5rem;
-      }
-
-      .tables-container {
-        width: 100%;
-      }
-
-      header {
-        padding: 1rem 0;
-      }
-
-      header img {
-        width: 80px;
-        height: 80px;
-      }
-
-      header h1 {
-        font-size: 1.5rem;
-      }
-
-      .day-filter {
-        flex-wrap: wrap;
-      }
-
-      .current-lesson {
-        font-size: 1.1rem;
-      }
-    }
-
-    @media screen and (max-width: 480px) {
-      header h1 {
-        font-size: 1.2rem;
-      }
-
-      header img {
-        width: 60px;
-        height: 60px;
-      }
-
-      .theme-toggle, .notify-toggle {
-        font-size: 1.2rem;
-        top: 0.8rem;
-      }
-
-      .language-toggle {
-        top: 0.8rem;
-        left: 0.8rem;
-      }
-
-      .lang-btn {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.9rem;
-      }
-
-      .day-filter button {
-        padding: 0.6rem 0.8rem;
-        font-size: 0.9rem;
-      }
-
-      th, td {
-        padding: 0.6rem 0.8rem;
-        font-size: 0.9rem;
-      }
-
-      .links-container a {
-        font-size: 0.9rem;
-      }
+    .theme-toggle, .notify-toggle {
+      margin-left: 10px;
+      padding: 5px 10px;
+      border: none;
+      background-color: #ddd;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -435,17 +115,17 @@
       <button class="lang-btn" data-lang="pl">PL</button>
     </div>
     <img src="https://i.postimg.cc/WbY9TdDp/PushIco.png" alt="Push School Logo">
-    <h1 data-key="header">Розклад уроків<br>1 клас<br>Push School Warsaw</h1>
+    <h1>Розклад уроків<br>1 клас<br>Push School Warsaw</h1>
     <button class="theme-toggle" aria-label="Переключити тему"><i class="fas fa-moon"></i></button>
     <button class="notify-toggle" aria-label="Увімкнути сповіщення"><i class="fas fa-bell"></i></button>
   </header>
   <div class="container">
     <div class="links-container">
-      <h3 data-key="usefulLinks">Корисні посилання:</h3>
+      <h3>Корисні посилання:</h3>
       <ul>
         <li><a href="https://prosvita.net/" target="_blank"><i class="fas fa-link"></i> Просвіта</a></li>
       </ul>
-      <h3 data-key="textbooks">Підручники:</h3>
+      <h3>Підручники:</h3>
       <ul>
         <li><a href="https://online.flipbuilder.com/sdtta/acov/" target="_blank"><i class="fas fa-book"></i> Academy Stars 1: Pupil's book</a></li>
         <li><a href="https://online.flipbuilder.com/sdtta/mxjn/" target="_blank"><i class="fas fa-book"></i> Academy Stars 1: Workbook</a></li>
@@ -456,30 +136,30 @@
       </ul>
     </div>
     <div class="tables-container">
-      <div class="current-lesson" id="current-lesson" role="alert" data-key="noLesson">Зараз немає уроків.</div>
-      <h2 data-key="scheduleToday">Розклад на сьогодні</h2>
+      <div class="current-lesson" id="current-lesson" role="alert">Зараз немає уроків.</div>
+      <h2>Розклад на сьогодні</h2>
       <div class="day-filter" id="day-filter"></div>
       <div class="table-wrapper">
         <table id="daily-schedule" role="grid">
           <thead>
             <tr>
-              <th data-key="number">№</th>
-              <th data-key="subject">Урок</th>
-              <th data-key="time">Час</th>
+              <th>№</th>
+              <th>Урок</th>
+              <th>Час</th>
             </tr>
           </thead>
           <tbody></tbody>
         </table>
       </div>
-      <h2 data-key="scheduleWeek">Розклад на тиждень</h2>
+      <h2>Розклад на тиждень</h2>
       <div class="table-wrapper">
         <table role="grid">
           <thead>
             <tr>
-              <th data-key="day">День</th>
-              <th data-key="number">№</th>
-              <th data-key="subject">Урок</th>
-              <th data-key="time">Час</th>
+              <th>День</th>
+              <th>№</th>
+              <th>Урок</th>
+              <th>Час</th>
             </tr>
           </thead>
           <tbody id="weekly-schedule"></tbody>
@@ -493,72 +173,23 @@
 
   <script src="/schedule.js"></script>
   <script>
-    // Об'єкт з перекладами
-    const translations = {
+    // Список днів тижня українською для логіки
+    const daysOfWeekUA = ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"];
+    // Переклади днів тижня для відображення
+    const daysTranslations = {
+      ua: ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"],
+      pl: ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"]
+    };
+    // Тексти для поточного уроку
+    const lessonTexts = {
       ua: {
-        title: "Розклад уроків",
-        header: "Розклад уроків<br>1 клас<br>Push School Warsaw",
-        usefulLinks: "Корисні посилання:",
-        textbooks: "Підручники:",
         noLesson: "Зараз немає уроків.",
-        scheduleToday: "Розклад на сьогодні",
-        scheduleWeek: "Розклад на тиждень",
-        number: "№",
-        subject: "Урок",
-        time: "Час",
-        day: "День",
-        days: ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"],
-        subjects: {
-          "Навчання грамоти": "Навчання грамоти",
-          "Математика": "Математика",
-          "Англійська мова": "Англійська мова",
-          "Przyroda": "Przyroda",
-          "Plastyka": "Plastyka",
-          "Jezyk Polski": "Jezyk Polski",
-          "Я досліджую світ": "Я досліджую світ",
-          "Edukacja wczesnoszkolna": "Edukacja wczesnoszkolna",
-          "Wyhowanie фізичне (басейн)": "Wyhowanie фізичне (басейн)",
-          "Перерва": "Перерва",
-          "Обід 1-4 класи": "Обід 1-4 класи",
-          "Обід 5-6 класи": "Обід 5-6 класи",
-          "Очікування автобусу": "Очікування автобусу",
-          "Шлях зі школи до басейну на автобусі": "Шлях зі школи до басейну на автобусі",
-          "Шлях з басейну до школи на автобусі": "Шлях з басейну до школи на автобусі"
-        },
         currentLesson: "Зараз урок: {subject} ({time})",
         currentBreak: "Зараз: {subject} ({time})",
         lessonsFinished: "Заняття закінчилися."
       },
       pl: {
-        title: "Plan lekcji",
-        header: "Plan lekcji<br>klasa 1<br>Push School Warsaw",
-        usefulLinks: "Przydatne linki:",
-        textbooks: "Podręczniki:",
         noLesson: "Obecnie nie ma lekcji.",
-        scheduleToday: "Plan na dziś",
-        scheduleWeek: "Plan na tydzień",
-        number: "Nr",
-        subject: "Lekcja",
-        time: "Czas",
-        day: "Dzień",
-        days: ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"],
-        subjects: {
-          "Навчання грамоти": "Nauka pisania",
-          "Математика": "Matematyka",
-          "Англійська мова": "Język angielski",
-          "Przyroda": "Przyroda",
-          "Plastyka": "Plastyka",
-          "Jezyk Polski": "Język polski",
-          "Я досліджую світ": "Odkrywam świat",
-          "Edukacja wczesnoszkolna": "Edukacja wczesnoszkolna",
-          "Wyhowanie фізичне (басейн)": "Wychowanie fizyczne (basen)",
-          "Перерва": "Przerwa",
-          "Обід 1-4 класи": "Obiad klasy 1-4",
-          "Обід 5-6 класи": "Obiad klasy 5-6",
-          "Очікування автобусу": "Oczekiwanie na autobus",
-          "Шлях зі школи до басейну на автобусі": "Droga ze szkoły do basenu autobusem",
-          "Шлях з басейну до школи на автобусі": "Droga z basenu do szkoły autobusem"
-        },
         currentLesson: "Obecnie lekcja: {subject} ({time})",
         currentBreak: "Obecnie: {subject} ({time})",
         lessonsFinished: "Zajęcia się zakończyły."
@@ -570,9 +201,8 @@
     function setLanguage(lang) {
       currentLang = lang;
       localStorage.setItem('language', lang);
-      updateText();
       renderDayFilter();
-      renderDailySchedule(translations['ua'].days[new Date().getDay()]);
+      renderDailySchedule(daysOfWeekUA[new Date().getDay()]);
       renderWeeklySchedule();
       renderCurrentLesson();
 
@@ -581,18 +211,8 @@
       });
     }
 
-    function updateText() {
-      document.querySelectorAll('[data-key]').forEach(element => {
-        const key = element.getAttribute('data-key');
-        if (translations[currentLang][key]) {
-          element.innerHTML = translations[currentLang][key];
-        }
-      });
-      document.title = translations[currentLang].title;
-    }
-
-    function getTranslatedSubject(subject) {
-      return translations[currentLang].subjects[subject] || subject;
+    function getSubjectName(subject) {
+      return subject[currentLang] || subject.ua; // За замовчуванням українська
     }
 
     function cacheSchedule() {
@@ -617,10 +237,11 @@
         });
 
         if (currentTime >= start && currentTime < end) {
-          if (lesson.subject === "Перерва" || lesson.subject.includes("Обід")) {
-            return { type: "break", lesson };
+          const subjectName = getSubjectName(lesson.subject);
+          if (lesson.subject.ua === "Перерва" || lesson.subject.ua.includes("Обід")) {
+            return { type: "break", lesson, subjectName };
           }
-          return { type: "lesson", lesson };
+          return { type: "lesson", lesson, subjectName };
         }
       }
 
@@ -638,9 +259,8 @@
     }
 
     function renderCurrentLesson() {
-      const daysOfWeek = translations['ua'].days;
       const today = new Date().getDay();
-      const todayName = daysOfWeek[today];
+      const todayName = daysOfWeekUA[today];
       const cachedSchedule = loadCachedSchedule();
       const daySchedule = cachedSchedule[todayName] || [];
       const currentLessonData = getCurrentLesson(daySchedule);
@@ -648,23 +268,21 @@
 
       if (currentLessonData) {
         if (currentLessonData.type === "lesson") {
-          const lesson = currentLessonData.lesson;
-          const translatedSubject = getTranslatedSubject(lesson.subject);
-          currentLessonDiv.textContent = translations[currentLang].currentLesson
-            .replace('{subject}', translatedSubject)
+          const { subjectName, lesson } = currentLessonData;
+          currentLessonDiv.textContent = lessonTexts[currentLang].currentLesson
+            .replace('{subject}', subjectName)
             .replace('{time}', lesson.time);
-          if (notificationsEnabled) notifyLesson(lesson);
+          if (notificationsEnabled) notifyLesson(lesson, subjectName);
         } else if (currentLessonData.type === "break") {
-          const lesson = currentLessonData.lesson;
-          const translatedSubject = getTranslatedSubject(lesson.subject);
-          currentLessonDiv.textContent = translations[currentLang].currentBreak
-            .replace('{subject}', translatedSubject)
+          const { subjectName, lesson } = currentLessonData;
+          currentLessonDiv.textContent = lessonTexts[currentLang].currentBreak
+            .replace('{subject}', subjectName)
             .replace('{time}', lesson.time);
         } else if (currentLessonData.type === "finished") {
-          currentLessonDiv.textContent = translations[currentLang].lessonsFinished;
+          currentLessonDiv.textContent = lessonTexts[currentLang].lessonsFinished;
         }
       } else {
-        currentLessonDiv.textContent = translations[currentLang].noLesson;
+        currentLessonDiv.textContent = lessonTexts[currentLang].noLesson;
       }
     }
 
@@ -675,11 +293,11 @@
       dailyScheduleTable.innerHTML = '';
 
       daySchedule.forEach(lesson => {
-        const isBreak = lesson.subject === "Перерва" || lesson.subject.includes("Обід");
-        const translatedSubject = getTranslatedSubject(lesson.subject);
+        const isBreak = lesson.subject.ua === "Перерва" || lesson.subject.ua.includes("Обід");
+        const subjectName = getSubjectName(lesson.subject);
         const row = `<tr class="${isBreak ? 'highlight' : ''}">
           <td>${lesson.number}</td>
-          <td>${translatedSubject}</td>
+          <td>${subjectName}</td>
           <td>${lesson.time}</td>
         </tr>`;
         dailyScheduleTable.innerHTML += row;
@@ -687,36 +305,24 @@
     }
 
     function renderWeeklySchedule() {
-      const daysOfWeek = translations['ua'].days;
-      const today = new Date().getDay();
-      const todayName = daysOfWeek[today];
       const cachedSchedule = loadCachedSchedule();
       const weeklyScheduleTable = document.querySelector("#weekly-schedule");
       weeklyScheduleTable.innerHTML = '';
 
-      const dayClasses = {
-        "Понеділок": "monday",
-        "Вівторок": "tuesday",
-        "Середа": "wednesday",
-        "Четвер": "thursday",
-        "П'ятниця": "friday",
-      };
-
       for (const day in cachedSchedule) {
-        const translatedDay = translations[currentLang].days[daysOfWeek.indexOf(day)];
+        const translatedDay = daysTranslations[currentLang][daysOfWeekUA.indexOf(day)];
         const dayLessons = cachedSchedule[day];
-        const dayClass = dayClasses[day] || "";
-        const isToday = day === todayName ? "current-day" : "";
+        const isToday = day === daysOfWeekUA[new Date().getDay()] ? "current-day" : "";
 
         dayLessons.forEach((lesson, index) => {
-          const isBreak = lesson.subject === "Перерва" || lesson.subject.includes("Обід");
-          const translatedSubject = getTranslatedSubject(lesson.subject);
-          const rowClass = isBreak ? "highlight" : `${dayClass} ${isToday}`;
+          const isBreak = lesson.subject.ua === "Перерва" || lesson.subject.ua.includes("Обід");
+          const subjectName = getSubjectName(lesson.subject);
+          const rowClass = isBreak ? "highlight" : isToday;
 
           const row = `<tr class="${rowClass}">
             ${index === 0 ? `<td rowspan="${dayLessons.length}">${translatedDay}</td>` : ''}
             <td>${lesson.number}</td>
-            <td>${translatedSubject}</td>
+            <td>${subjectName}</td>
             <td>${lesson.time}</td>
           </tr>`;
           weeklyScheduleTable.innerHTML += row;
@@ -725,15 +331,15 @@
     }
 
     function renderDayFilter() {
-      const daysOfWeek = translations[currentLang].days.slice(1, 6); // Понеділок - П'ятниця
+      const days = daysTranslations[currentLang].slice(1, 6); // Понеділок - П’ятниця
       const today = new Date().getDay();
       const filterContainer = document.getElementById("day-filter");
       filterContainer.innerHTML = '';
 
-      daysOfWeek.forEach((day, index) => {
+      days.forEach((day, index) => {
         const button = document.createElement("button");
         button.textContent = day;
-        button.dataset.day = translations['ua'].days[index + 1]; // Зберігаємо українську назву для фільтрації
+        button.dataset.day = daysOfWeekUA[index + 1]; // Зберігаємо українську назву для фільтрації
         if (index + 1 === today) button.classList.add("active");
         button.addEventListener("click", () => {
           document.querySelectorAll(".day-filter button").forEach(btn => btn.classList.remove("active"));
@@ -748,7 +354,7 @@
 
     function requestNotificationPermission() {
       if (!("Notification" in window)) {
-        alert(translations[currentLang].noNotificationsSupport || "Ваш браузер не підтримує сповіщення.");
+        alert("Ваш браузер не підтримує сповіщення.");
         return;
       }
 
@@ -760,59 +366,19 @@
       });
     }
 
-    function notifyLesson(lesson) {
+    function notifyLesson(lesson, subjectName) {
       if (notificationsEnabled && Notification.permission === "granted") {
-        new Notification(translations[currentLang].currentLessonTitle || "Поточний урок", {
-          body: `${getTranslatedSubject(lesson.subject)} (${lesson.time})`,
+        new Notification("Поточний урок", {
+          body: `${subjectName} (${lesson.time})`,
           icon: "https://cdn-icons-png.flaticon.com/512/4751/4751951.png"
         });
       }
     }
 
-    function handleTouchZoom(img) {
-      let scale = 1;
-      let startDistance = 0;
-
-      img.addEventListener('touchstart', (e) => {
-        if (e.touches.length === 2) {
-          startDistance = Math.hypot(
-            e.touches[0].pageX - e.touches[1].pageX,
-            e.touches[0].pageY - e.touches[1].pageY
-          );
-        }
-      });
-
-      img.addEventListener('touchmove', (e) => {
-        if (e.touches.length === 2) {
-          const currentDistance = Math.hypot(
-            e.touches[0].pageX - e.touches[1].pageX,
-            e.touches[0].pageY - e.touches[1].pageY
-          );
-          scale = currentDistance / startDistance;
-          img.style.transform = `scale(${Math.min(Math.max(scale, 1), 2)})`;
-          e.preventDefault();
-        }
-      });
-
-      img.addEventListener('touchend', () => {
-        if (scale < 1.5) img.style.transform = 'scale(1)';
-      });
-
-      img.addEventListener('click', () => {
-        if (img.style.transform === "scale(2)") {
-          img.style.transform = "scale(1)";
-        } else {
-          img.style.transform = "scale(2)";
-        }
-        img.style.transition = "transform 0.3s ease";
-      });
-    }
-
     // Ініціалізація
     setLanguage(currentLang);
-    const daysOfWeek = translations['ua'].days;
     const today = new Date().getDay();
-    renderDailySchedule(daysOfWeek[today]);
+    renderDailySchedule(daysOfWeekUA[today]);
     renderWeeklySchedule();
     renderDayFilter();
     renderCurrentLesson();
@@ -820,9 +386,7 @@
     cacheSchedule();
 
     document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        setLanguage(btn.dataset.lang);
-      });
+      btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
     });
 
     document.querySelector('.theme-toggle').addEventListener('click', () => {
@@ -840,9 +404,6 @@
         document.querySelector('.notify-toggle i').classList.replace('fa-bell-slash', 'fa-bell');
       }
     });
-
-    const image = document.querySelector('.google-image');
-    handleTouchZoom(image);
   </script>
 </body>
 </html>
