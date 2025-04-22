@@ -30,6 +30,8 @@ const schedule = {
     { number: 4, subject: { ua: "Przyroda", pl: "Przyroda" }, time: "11:55 - 12:40" },
     { number: " ", subject: { ua: "Обід 5-6 класи", pl: "Obiad dla klas 5-6" }, time: "12:40 - 13:00" },
     { number: 5, subject: { ua: "Plastyka", pl: "Plastyka" }, time: "13:00 - 13:45" },
+    { number: " ", subject: { ua: "Перерва", pl: "Przerwa" }, time: "13:45 - 13:55" },
+    { number: 6, subject: { ua: "Jezyk Polski", pl: "Język Polski" }, time: "13:55 - 14:40" },
   ],
   Wednesday: [
     { number: 1, subject: { ua: "Навчання грамоти", pl: "Nauka czytania i pisania" }, time: "9:00 - 9:45" },
